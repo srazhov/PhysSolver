@@ -1,8 +1,8 @@
 ﻿namespace PhysHelper.SIObjects
 {
-	public class Mass : IScalar
+	public class Mass : Scalar
 	{
-        public string UnitOfMeasure => Constants.Mass;
+        public override string UnitOfMeasure => Constants.Mass;
     }
 }
 

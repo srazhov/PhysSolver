@@ -10,10 +10,12 @@
     <None Remove="SIObjects\" />
     <None Remove="SIObjects\Forces\" />
     <None Remove="SIObjects\Kinematics\" />
+    <None Remove="SIObjects\Enums\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SIObjects\" />
     <Folder Include="SIObjects\Forces\" />
     <Folder Include="SIObjects\Kinematics\" />
+    <Folder Include="SIObjects\Enums\" />
   </ItemGroup>
 </Project>

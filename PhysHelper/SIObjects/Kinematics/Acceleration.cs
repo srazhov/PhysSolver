@@ -1,8 +1,8 @@
 ﻿namespace PhysHelper.SIObjects.Kinematics
 {
-	public class Acceleration : IVector
+	public class Acceleration : Vector
 	{
-        public string UnitOfMeasure => Constants.Kinematics.Acceleration;
+        public override string UnitOfMeasure => Constants.Kinematics.Acceleration;
 
 
     }
