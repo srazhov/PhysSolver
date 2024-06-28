@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="SIObjects\" />
+    <None Remove="SIObjects\Forces\" />
+    <None Remove="SIObjects\Kinematics\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SIObjects\" />
+    <Folder Include="SIObjects\Forces\" />
+    <Folder Include="SIObjects\Kinematics\" />
+  </ItemGroup>
+</Project>
