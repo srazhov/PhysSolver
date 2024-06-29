@@ -4,7 +4,7 @@ using PhysHelper.SIObjects.Forces;
 
 namespace PhysHelper.Tests.SIObjects.Forces
 {
-    public class ForceTests
+    public class WeightForceTests
     {
         [Test]
         public void MustReturnCorrectUnitOfMeasurement()
