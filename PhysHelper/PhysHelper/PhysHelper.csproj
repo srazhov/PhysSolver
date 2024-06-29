@@ -13,6 +13,7 @@
     <None Remove="Scenes\" />
     <None Remove="Scenes\Implementation\" />
     <None Remove="Enums\" />
+    <None Remove="Factories\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SIObjects\" />
@@ -21,5 +22,6 @@
     <Folder Include="Scenes\" />
     <Folder Include="Scenes\Implementation\" />
     <Folder Include="Enums\" />
+    <Folder Include="Factories\" />
   </ItemGroup>
 </Project>

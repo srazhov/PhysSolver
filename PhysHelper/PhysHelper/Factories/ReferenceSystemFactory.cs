@@ -1,6 +1,8 @@
 ﻿using PhysHelper.Enums;
+using PhysHelper.Scenes;
+using PhysHelper.Scenes.Implementation;
 
-namespace PhysHelper.Scenes.Implementation
+namespace PhysHelper.Factories
 {
     public static class ReferenceSystemFactory
     {

@@ -1,4 +1,7 @@
-﻿namespace PhysHelper.SIObjects.Forces
+﻿using PhysHelper.SIObjects;
+using PhysHelper.SIObjects.Forces;
+
+namespace PhysHelper.Factories
 {
     public static class ForceFactory
     {
