@@ -5,9 +5,9 @@ namespace PhysHelper.Factories
 {
     public static class ForceFactory
     {
-        public static Force GetWeightForce(double mass)
+        public static Force GetWeightForce(double mass, double angle = 270)
         {
-            var wF = new Force(mass, Constants.Forces.g_Earth, 270);
+            var wF = new Force(mass, Constants.Forces.g_Earth, angle);
             return wF;
         }
 

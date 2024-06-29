@@ -20,10 +20,14 @@
   <ItemGroup>
     <None Remove="SIObjects\" />
     <None Remove="SIObjects\Forces\" />
+    <None Remove="Scenes\" />
+    <None Remove="Scenes\Objects\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SIObjects\" />
     <Folder Include="SIObjects\Forces\" />
+    <Folder Include="Scenes\" />
+    <Folder Include="Scenes\Objects\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysHelper\PhysHelper.csproj" />

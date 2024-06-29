@@ -10,7 +10,7 @@ namespace PhysHelper.Factories
         {
             return state switch
             {
-                ReferenceSystemState.Absolute => new ReferenceSystem(0),
+                ReferenceSystemState.Absolute => new ReferenceSystem(state, 0),
                 _ => throw new NotImplementedException(),
             };
         }

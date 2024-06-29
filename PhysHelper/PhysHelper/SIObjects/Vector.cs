@@ -10,7 +10,7 @@ namespace PhysHelper.SIObjects
         {
             get
             {
-                return (Math.PI / 180) * Angle;
+                return Angle * Math.PI / 180;
             }
         }
 
@@ -24,8 +24,8 @@ namespace PhysHelper.SIObjects
             {
                 if (direction == null)
                 {
-                    var xComp = Quantity * Math.Cos(AngleInRadians);
-                    var yComp = Quantity * Math.Sin(AngleInRadians);
+                    var xComp = Math.Round(Quantity * Math.Cos(AngleInRadians), 5);
+                    var yComp = Math.Round(Quantity * Math.Sin(AngleInRadians), 5);
 
                     direction = new VectorQuantity(xComp, yComp);
                 }
