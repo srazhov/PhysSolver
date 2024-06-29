@@ -9,6 +9,12 @@
             Quantity = mass * acceleration;
             Angle = angle;
         }
+
+        public Force(double quantity, double angle)
+        {
+            Quantity = quantity;
+            Angle = angle;
+        }
     }
 }
 

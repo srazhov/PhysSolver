@@ -16,6 +16,7 @@
     <None Remove="Factories\" />
     <None Remove="Scenes\Objects\" />
     <None Remove="SIObjects\Scalars\" />
+    <None Remove="Scenes\ObjectRelations\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SIObjects\" />
@@ -27,5 +28,6 @@
     <Folder Include="Factories\" />
     <Folder Include="Scenes\Objects\" />
     <Folder Include="SIObjects\Scalars\" />
+    <Folder Include="Scenes\ObjectRelations\" />
   </ItemGroup>
 </Project>

@@ -52,7 +52,7 @@ namespace PhysHelper.Scenes.Objects
             {
                 if (forces.OfType<KineticFrictionForce>().Any(x => x.FrictionBetweenAnotherObjectId == kF.FrictionBetweenAnotherObjectId))
                 {
-                    throw new ArgumentOutOfRangeException(nameof(force), "Kinetic friction force is already exists in this object");
+                    throw new ArgumentException(nameof(force), "Kinetic friction force is already exists in this object");
                 }
             }
 

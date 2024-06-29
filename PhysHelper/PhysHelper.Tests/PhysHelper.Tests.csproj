@@ -22,12 +22,14 @@
     <None Remove="SIObjects\Forces\" />
     <None Remove="Scenes\" />
     <None Remove="Scenes\Objects\" />
+    <None Remove="Scenes\ObjectRelations\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SIObjects\" />
     <Folder Include="SIObjects\Forces\" />
     <Folder Include="Scenes\" />
     <Folder Include="Scenes\Objects\" />
+    <Folder Include="Scenes\ObjectRelations\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysHelper\PhysHelper.csproj" />

@@ -18,14 +18,20 @@ namespace PhysHelper.Factories
             return nF;
         }
 
-        public static void CreateKineticFrictionForceBetweenObjects(IPhysObject objectX, IPhysObject objectY, double k, double mass, double angle)
+        public static Force GetConstantForce(double force, double angle)
         {
-            var kF_Y = new KineticFrictionForce(objectY.GetId(), k, mass, angle);
+            var f = new Force(force, angle);
+
+            return f;
+        }
+
+        public static void CreateKineticFrictionForceBetweenObjects(IPhysObject objectX, IPhysObject objectY, double k, double massOfObjOnTop, double angle)
+        {
+            var kF_Y = new KineticFrictionForce(objectY.GetId(), k, massOfObjOnTop, angle);
             objectX.AddForce(kF_Y);
 
-            var kF_X = new KineticFrictionForce(objectX.GetId(), k, mass, angle);
+            var kF_X = new KineticFrictionForce(objectX.GetId(), k, massOfObjOnTop, angle);
             objectY.AddForce(kF_X);
         }
     }
 }
-
