@@ -1,4 +1,5 @@
-﻿using PhysHelper.SIObjects;
+﻿using PhysHelper.Scenes.Objects;
+using PhysHelper.SIObjects;
 using PhysHelper.SIObjects.Forces;
 
 namespace PhysHelper.Factories
@@ -15,6 +16,15 @@ namespace PhysHelper.Factories
         {
             var nF = new Force(mass, Constants.Forces.g_Earth, 90);
             return nF;
+        }
+
+        public static void CreateKineticFrictionForceBetweenObjects(IPhysObject objectX, IPhysObject objectY, double k, double mass, double angle)
+        {
+            var kF_Y = new KineticFrictionForce(objectY.GetId(), k, mass, angle);
+            objectX.AddForce(kF_Y);
+
+            var kF_X = new KineticFrictionForce(objectX.GetId(), k, mass, angle);
+            objectY.AddForce(kF_X);
         }
     }
 }

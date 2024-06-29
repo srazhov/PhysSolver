@@ -6,9 +6,13 @@ namespace PhysHelper.Scenes.Objects
 {
     public abstract class PhysObject : IPhysObject
     {
-        public double Mass { get; private set; }
+        private IReferenceSystem RefSystem;
 
-        private IReferenceSystem RefSystem { get; set; }
+        private string? Id = null;
+
+        private List<Force>? Forces = null;
+
+        public double Mass { get; private set; }
 
         public PhysObject(double mass)
         {
@@ -17,15 +21,18 @@ namespace PhysHelper.Scenes.Objects
             RefSystem = ReferenceSystemFactory.GetReferenceSystem(ReferenceSystemState.Absolute);
         }
 
+        public string GetId()
+        {
+            return Id ??= Guid.NewGuid().ToString();
+        }
+
         public List<Force> GetAllForces()
         {
-            var forces = new List<Force>
+            return Forces ??= new List<Force>
             {
                 ForceFactory.GetWeightForce(Mass),
                 ForceFactory.GetNormalForce(Mass)
             };
-
-            return forces;
         }
 
         public IReferenceSystem GetRefSystem()
@@ -36,6 +43,20 @@ namespace PhysHelper.Scenes.Objects
         public void ChangeRefSystem(ReferenceSystemState state)
         {
             RefSystem = ReferenceSystemFactory.GetReferenceSystem(state);
+        }
+
+        public void AddForce(Force force)
+        {
+            var forces = GetAllForces();
+            if (force is KineticFrictionForce kF)
+            {
+                if (forces.OfType<KineticFrictionForce>().Any(x => x.FrictionBetweenAnotherObjectId == kF.FrictionBetweenAnotherObjectId))
+                {
+                    throw new ArgumentOutOfRangeException(nameof(force), "Kinetic friction force is already exists in this object");
+                }
+            }
+
+            forces.Add(force);
         }
     }
 }

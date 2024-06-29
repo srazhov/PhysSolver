@@ -3,15 +3,19 @@ using PhysHelper.SIObjects.Forces;
 
 namespace PhysHelper.Scenes.Objects
 {
-	public interface IPhysObject
-	{
-		double Mass { get; }
+    public interface IPhysObject
+    {
+        string GetId();
 
-		IReferenceSystem GetRefSystem();
+        double Mass { get; }
 
-		void ChangeRefSystem(ReferenceSystemState state);
+        IReferenceSystem GetRefSystem();
 
-		List<Force> GetAllForces();
-	}
+        void ChangeRefSystem(ReferenceSystemState state);
+
+        List<Force> GetAllForces();
+
+        void AddForce(Force force);
+    }
 }
 
