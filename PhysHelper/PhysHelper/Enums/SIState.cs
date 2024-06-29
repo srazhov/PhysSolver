@@ -1,4 +1,4 @@
-﻿namespace PhysHelper.SIObjects.Enums
+﻿namespace PhysHelper.Enums
 {
 	public enum SIState
 	{

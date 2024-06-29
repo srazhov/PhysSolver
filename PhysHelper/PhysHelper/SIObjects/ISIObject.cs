@@ -1,12 +1,12 @@
-﻿using PhysHelper.SIObjects.Enums;
+﻿using PhysHelper.Enums;
 
 namespace PhysHelper.SIObjects
 {
-	public interface ISIObject
-	{
-		string UnitOfMeasure { get; }
+    public interface ISIObject
+    {
+        string UnitOfMeasure { get; }
 
-		SIState SIState { get; }
-	}
+        SIState SIState { get; }
+    }
 }
 

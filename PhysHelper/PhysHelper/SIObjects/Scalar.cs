@@ -1,4 +1,4 @@
-﻿using PhysHelper.SIObjects.Enums;
+﻿using PhysHelper.Enums;
 
 namespace PhysHelper.SIObjects
 {
@@ -6,7 +6,9 @@ namespace PhysHelper.SIObjects
     {
         public abstract string UnitOfMeasure { get; }
 
-        public SIState SIState { get; }
+        public SIState SIState { get; set; }
+
+        public double Quantity { get; set; }
     }
 }
 

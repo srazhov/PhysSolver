@@ -1,30 +1,50 @@
-﻿using PhysHelper.SIObjects.Enums;
+﻿using PhysHelper.Enums;
 
 namespace PhysHelper.SIObjects
 {
     public abstract class Vector : ISIObject
     {
-        public bool IsIt3D { get; }
+        private VectorQuantity? direction;
 
-        public VectorQuantity? CurrentPosition { get; set; }
+        private double AngleInRadians
+        {
+            get
+            {
+                return (Math.PI / 180) * Angle;
+            }
+        }
 
-        public required VectorQuantity Direction { get; set; }
+        public double Quantity { get; set; }
+
+        public double Angle { get; set; }
+
+        public VectorQuantity Direction
+        {
+            get
+            {
+                if (direction == null)
+                {
+                    var xComp = Quantity * Math.Cos(AngleInRadians);
+                    var yComp = Quantity * Math.Sin(AngleInRadians);
+
+                    direction = new VectorQuantity(xComp, yComp);
+                }
+
+                return direction;
+            }
+        }
 
         public double Magnitude
         {
             get
             {
-                return IsIt3D ?
-                    Math.Sqrt(Math.Pow(Direction.X, 2) + Math.Pow(Direction.Y, 2) + Math.Pow(Direction.Z, 2)) :
-                    Math.Sqrt(Math.Pow(Direction.X, 2) + Math.Pow(Direction.Y, 2));
+                return Math.Sqrt(Math.Pow(Direction.X, 2) + Math.Pow(Direction.Y, 2));
             }
         }
 
-        public double Angle { get; set; }
-
         public abstract string UnitOfMeasure { get; }
 
-        public SIState SIState { get; }
+        public SIState SIState { get; protected set; }
 
         public class VectorQuantity
         {
@@ -32,7 +52,11 @@ namespace PhysHelper.SIObjects
 
             public double Y { get; set; }
 
-            public double Z { get; set; }
+            public VectorQuantity(double x, double y)
+            {
+                X = x;
+                Y = y;
+            }
         }
     }
 }
