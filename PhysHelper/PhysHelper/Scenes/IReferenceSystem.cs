@@ -1,8 +1,12 @@
-﻿namespace PhysHelper.Scenes
+﻿using PhysHelper.Enums;
+
+namespace PhysHelper.Scenes
 {
-	public interface IReferenceSystem
-	{
-		double GetAngle();
-	}
+    public interface IReferenceSystem
+    {
+        ReferenceSystemState GetSystemState();
+
+        double GetAngle();
+    }
 }
 
