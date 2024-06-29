@@ -3,8 +3,6 @@
 	public class Acceleration : Vector
 	{
         public override string UnitOfMeasure => Constants.Kinematics.Acceleration;
-
-
     }
 }
 

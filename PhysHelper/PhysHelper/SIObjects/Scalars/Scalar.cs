@@ -1,6 +1,6 @@
 ﻿using PhysHelper.Enums;
 
-namespace PhysHelper.SIObjects
+namespace PhysHelper.SIObjects.Scalars
 {
     public abstract class Scalar : ISIObject
     {

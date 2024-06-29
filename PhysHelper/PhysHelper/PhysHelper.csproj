@@ -15,6 +15,7 @@
     <None Remove="Enums\" />
     <None Remove="Factories\" />
     <None Remove="Scenes\Objects\" />
+    <None Remove="SIObjects\Scalars\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SIObjects\" />
@@ -25,5 +26,6 @@
     <Folder Include="Enums\" />
     <Folder Include="Factories\" />
     <Folder Include="Scenes\Objects\" />
+    <Folder Include="SIObjects\Scalars\" />
   </ItemGroup>
 </Project>

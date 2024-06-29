@@ -18,7 +18,7 @@ namespace PhysHelper.SIObjects
 
         public double Angle { get; set; }
 
-        public VectorQuantity Direction
+        public virtual VectorQuantity Direction
         {
             get
             {
