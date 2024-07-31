@@ -4,7 +4,16 @@ namespace PhysHelper.SIObjects
 {
     public abstract class Vector : ISIObject
     {
+        public Vector(double quantity, double angle)
+        {
+            Quantity = quantity;
+            Angle = angle;
+            SIState = SIState.Known;
+        }
+
         private VectorQuantity? direction;
+
+        private double angle;
 
         private double AngleInRadians
         {
@@ -16,7 +25,11 @@ namespace PhysHelper.SIObjects
 
         public double Quantity { get; set; }
 
-        public double Angle { get; set; }
+        public double Angle
+        {
+            get => angle;
+            set => angle = Math.Abs(value % 360);
+        }
 
         public virtual VectorQuantity Direction
         {
@@ -46,17 +59,11 @@ namespace PhysHelper.SIObjects
 
         public SIState SIState { get; protected set; }
 
-        public class VectorQuantity
+        public class VectorQuantity(double x, double y)
         {
-            public double X { get; set; }
+            public double X { get; set; } = x;
 
-            public double Y { get; set; }
-
-            public VectorQuantity(double x, double y)
-            {
-                X = x;
-                Y = y;
-            }
+            public double Y { get; set; } = y;
         }
     }
 }

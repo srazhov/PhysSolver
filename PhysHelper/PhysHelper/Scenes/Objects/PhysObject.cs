@@ -1,62 +1,19 @@
-﻿using PhysHelper.Enums;
-using PhysHelper.Factories;
-using PhysHelper.SIObjects.Forces;
+﻿using PhysHelper.SIObjects.Forces;
+using PhysHelper.SIObjects.Scalars;
 
 namespace PhysHelper.Scenes.Objects
 {
-    public abstract class PhysObject : IPhysObject
+    public abstract class PhysObject(Mass mass, List<Force> forces) : IPhysObject
     {
-        private IReferenceSystem RefSystem;
-
         private string? Id = null;
 
-        private List<Force>? Forces = null;
+        public Mass Mass { get; private set; } = mass;
 
-        public double Mass { get; private set; }
-
-        public PhysObject(double mass)
-        {
-            Mass = mass;
-
-            RefSystem = ReferenceSystemFactory.GetReferenceSystem(ReferenceSystemState.Absolute);
-        }
+        public List<Force> Forces { get; private set; } = forces;
 
         public string GetId()
         {
             return Id ??= Guid.NewGuid().ToString();
-        }
-
-        public List<Force> GetAllForces()
-        {
-            return Forces ??= new List<Force>
-            {
-                ForceFactory.GetWeightForce(Mass),
-                ForceFactory.GetNormalForce(Mass)
-            };
-        }
-
-        public IReferenceSystem GetRefSystem()
-        {
-            return RefSystem;
-        }
-
-        public void ChangeRefSystem(ReferenceSystemState state)
-        {
-            RefSystem = ReferenceSystemFactory.GetReferenceSystem(state);
-        }
-
-        public void AddForce(Force force)
-        {
-            var forces = GetAllForces();
-            if (force is KineticFrictionForce kF)
-            {
-                if (forces.OfType<KineticFrictionForce>().Any(x => x.FrictionBetweenAnotherObjectId == kF.FrictionBetweenAnotherObjectId))
-                {
-                    throw new ArgumentException(nameof(force), "Kinetic friction force is already exists in this object");
-                }
-            }
-
-            forces.Add(force);
         }
     }
 }

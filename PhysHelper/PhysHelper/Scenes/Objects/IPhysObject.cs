@@ -1,5 +1,5 @@
-﻿using PhysHelper.Enums;
-using PhysHelper.SIObjects.Forces;
+﻿using PhysHelper.SIObjects.Forces;
+using PhysHelper.SIObjects.Scalars;
 
 namespace PhysHelper.Scenes.Objects
 {
@@ -7,15 +7,9 @@ namespace PhysHelper.Scenes.Objects
     {
         string GetId();
 
-        double Mass { get; }
+        Mass Mass { get; }
 
-        IReferenceSystem GetRefSystem();
-
-        void ChangeRefSystem(ReferenceSystemState state);
-
-        List<Force> GetAllForces();
-
-        void AddForce(Force force);
+        List<Force> Forces { get; }
     }
 }
 

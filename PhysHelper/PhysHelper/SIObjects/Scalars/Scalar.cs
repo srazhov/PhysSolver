@@ -9,6 +9,17 @@ namespace PhysHelper.SIObjects.Scalars
         public SIState SIState { get; set; }
 
         public double Quantity { get; set; }
+
+        public Scalar(double quantity)
+        {
+            Quantity = quantity;
+            SIState = SIState.Known;
+        }
+
+        public Scalar()
+        {
+            SIState = SIState.Unimportant;
+        }
     }
 }
 

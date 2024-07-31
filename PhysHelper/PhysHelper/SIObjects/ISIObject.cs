@@ -7,6 +7,8 @@ namespace PhysHelper.SIObjects
         string UnitOfMeasure { get; }
 
         SIState SIState { get; }
+
+        double Quantity { get; }
     }
 }
 
