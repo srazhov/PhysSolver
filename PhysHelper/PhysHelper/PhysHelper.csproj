@@ -14,12 +14,11 @@
     <None Remove="SIObjects\Forces\" />
     <None Remove="SIObjects\Kinematics\" />
     <None Remove="Scenes\" />
-    <None Remove="Scenes\Implementation\" />
     <None Remove="Enums\" />
     <None Remove="Factories\" />
     <None Remove="Scenes\Objects\" />
     <None Remove="SIObjects\Scalars\" />
-    <None Remove="Scenes\ObjectRelations\" />
+    <None Remove="Scenes\SceneSettings\" />
     <None Remove="Parsers\" />
     <None Remove="Parsers\ForceParsers\" />
   </ItemGroup>
@@ -28,12 +27,11 @@
     <Folder Include="SIObjects\Forces\" />
     <Folder Include="SIObjects\Kinematics\" />
     <Folder Include="Scenes\" />
-    <Folder Include="Scenes\Implementation\" />
     <Folder Include="Enums\" />
     <Folder Include="Factories\" />
     <Folder Include="Scenes\Objects\" />
     <Folder Include="SIObjects\Scalars\" />
-    <Folder Include="Scenes\ObjectRelations\" />
+    <Folder Include="Scenes\SceneSettings\" />
     <Folder Include="Parsers\" />
     <Folder Include="Parsers\ForceParsers\" />
   </ItemGroup>
