@@ -1,11 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
   <ItemGroup>
     <None Remove="SIObjects\" />
     <None Remove="SIObjects\Forces\" />
@@ -17,6 +20,8 @@
     <None Remove="Scenes\Objects\" />
     <None Remove="SIObjects\Scalars\" />
     <None Remove="Scenes\ObjectRelations\" />
+    <None Remove="Parsers\" />
+    <None Remove="Parsers\ForceParsers\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SIObjects\" />
@@ -29,5 +34,7 @@
     <Folder Include="Scenes\Objects\" />
     <Folder Include="SIObjects\Scalars\" />
     <Folder Include="Scenes\ObjectRelations\" />
+    <Folder Include="Parsers\" />
+    <Folder Include="Parsers\ForceParsers\" />
   </ItemGroup>
 </Project>
