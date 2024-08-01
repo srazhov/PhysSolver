@@ -8,6 +8,8 @@
         {
             Quantity = quantity;
         }
+
+        public Mass() : base() { }
     }
 }
 

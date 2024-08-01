@@ -11,16 +11,18 @@ namespace PhysHelper.SIObjects
             SIState = SIState.Known;
         }
 
+        public Vector()
+        {
+            SIState = SIState.Unimportant;
+        }
+
         private VectorQuantity? direction;
 
         private double angle;
 
-        private double AngleInRadians
+        private double GetAngleInRadians()
         {
-            get
-            {
-                return Angle * Math.PI / 180;
-            }
+            return Angle * Math.PI / 180;
         }
 
         public double Quantity { get; set; }
@@ -37,8 +39,8 @@ namespace PhysHelper.SIObjects
             {
                 if (direction == null)
                 {
-                    var xComp = Math.Round(Quantity * Math.Cos(AngleInRadians), 5);
-                    var yComp = Math.Round(Quantity * Math.Sin(AngleInRadians), 5);
+                    var xComp = Math.Round(Quantity * Math.Cos(GetAngleInRadians()), 5);
+                    var yComp = Math.Round(Quantity * Math.Sin(GetAngleInRadians()), 5);
 
                     direction = new VectorQuantity(xComp, yComp);
                 }
