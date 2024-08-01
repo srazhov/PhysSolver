@@ -21,6 +21,8 @@
   <ItemGroup>
     <None Remove="SIObjects\" />
     <None Remove="SIObjects\Forces\" />
+    <None Remove="Parsers\" />
+    <None Remove="Parsers\PhysObjectParsers\" />
     <None Remove="Scenes\" />
     <None Remove="Scenes\Objects\" />
     <None Remove="Scenes\SceneSettings\" />
@@ -28,6 +30,8 @@
   <ItemGroup>
     <Folder Include="SIObjects\" />
     <Folder Include="SIObjects\Forces\" />
+    <Folder Include="Parsers\" />
+    <Folder Include="Parsers\PhysObjectParsers\" />
     <Folder Include="Scenes\" />
     <Folder Include="Scenes\Objects\" />
     <Folder Include="Scenes\SceneSettings\" />

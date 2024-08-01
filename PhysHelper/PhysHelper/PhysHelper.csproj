@@ -20,7 +20,7 @@
     <None Remove="SIObjects\Scalars\" />
     <None Remove="Scenes\SceneSettings\" />
     <None Remove="Parsers\" />
-    <None Remove="Parsers\ForceParsers\" />
+    <None Remove="Parsers\PhysObjectParsers\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SIObjects\" />
@@ -33,6 +33,6 @@
     <Folder Include="SIObjects\Scalars\" />
     <Folder Include="Scenes\SceneSettings\" />
     <Folder Include="Parsers\" />
-    <Folder Include="Parsers\ForceParsers\" />
+    <Folder Include="Parsers\PhysObjectParsers\" />
   </ItemGroup>
 </Project>

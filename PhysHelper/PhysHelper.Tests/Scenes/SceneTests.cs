@@ -1,6 +1,5 @@
 ﻿using PhysHelper.Scenes;
 using PhysHelper.Scenes.Objects;
-using PhysHelper.SIObjects.Forces;
 
 namespace PhysHelper.Tests.Scenes
 {

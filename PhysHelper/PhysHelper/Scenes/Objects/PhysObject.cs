@@ -3,9 +3,9 @@ using PhysHelper.SIObjects.Scalars;
 
 namespace PhysHelper.Scenes.Objects
 {
-    public abstract class PhysObject(Mass mass, List<Force> forces) : IPhysObject
+    public abstract class PhysObject(Mass mass, List<Force> forces, string? id = null) : IPhysObject
     {
-        private string? Id = null;
+        private string? Id = id;
 
         public Mass Mass { get; private set; } = mass;
 
