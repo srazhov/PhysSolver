@@ -7,6 +7,8 @@ public class SceneSettings
     public GroundSettings? Ground { get; set; }
 
     public required List<ObjectSettings> Objects { get; set; }
+
+    public required List<List<string>> ObjectsPlacementOrder { get; set; }
 }
 
 public class GlobalSceneSettings
@@ -19,6 +21,4 @@ public class GroundSettings
     public bool Exists { get; set; }
 
     public double Angle { get; set; }
-
-    public List<string>? ObjectsOnTop { get; set; }
 }

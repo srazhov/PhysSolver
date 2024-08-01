@@ -2,6 +2,8 @@
 {
     public static class Constants
     {
+        public const string GroundId = "ground";
+
         public static class Forces
         {
             public const string Newton = "N";

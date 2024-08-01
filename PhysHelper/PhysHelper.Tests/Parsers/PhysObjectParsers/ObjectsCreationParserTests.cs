@@ -12,6 +12,7 @@ public class ObjectsCreationParserTests
         // Arrange
         var query = new SceneSettings()
         {
+            Global = null,
             Ground = new GroundSettings()
             {
                 Angle = 0,
@@ -39,7 +40,8 @@ public class ObjectsCreationParserTests
                     HasKineticFriction = [],
                     Forces = []
                 }
-            ]
+            ],
+            ObjectsPlacementOrder = [["ground", "m1", "m2"]]
         };
 
         var parser = new ObjectsCreationParser();
@@ -64,6 +66,8 @@ public class ObjectsCreationParserTests
         // Arrange
         var query = new SceneSettings()
         {
+            Global = null,
+            Ground = null,
             Objects =
             [
                 new(){
@@ -86,7 +90,8 @@ public class ObjectsCreationParserTests
                     HasKineticFriction = [],
                     Forces = []
                 }
-            ]
+            ],
+            ObjectsPlacementOrder = [["m1", "m2"]]
         };
 
         var parser = new ObjectsCreationParser();
@@ -111,6 +116,8 @@ public class ObjectsCreationParserTests
         // Arrange
         var query = new SceneSettings()
         {
+            Global = null,
+            Ground = null,
             Objects =
             [
                 new(){
@@ -133,7 +140,8 @@ public class ObjectsCreationParserTests
                     HasKineticFriction = [],
                     Forces = []
                 }
-            ]
+            ],
+            ObjectsPlacementOrder = [["m1", "m2"]]
         };
 
         var parser = new ObjectsCreationParser();
@@ -141,10 +149,10 @@ public class ObjectsCreationParserTests
 
         // Act
         parser.Parse(results, query);
-        var actualM1 = results.SingleOrDefault(x => x.GetId() == "m1");
-        var actualM2 = results.SingleOrDefault(x => x.GetId() == "m2");
 
         // Assert
+        var actualM1 = results.SingleOrDefault(x => x.GetId() == "m1");
+        var actualM2 = results.SingleOrDefault(x => x.GetId() == "m2");
         Assert.Multiple(() =>
         {
             Assert.That(results, Has.Exactly(2).Items);
