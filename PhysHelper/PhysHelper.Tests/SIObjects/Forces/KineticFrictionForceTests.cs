@@ -5,10 +5,10 @@ namespace PhysHelper.Tests.SIObjects.Forces
     public class KineticFrictionForceTests
     {
         [Test]
-        public void Test()
+        public void BodyMovesOnARoughPlane_MustReturnKineticFrictionForce()
         {
             // Arrange
-            var kF = new KineticFrictionForce(string.Empty, 0.2, 100, -180);
+            var kF = new KineticFrictionForce(0.2, 100, -180);
 
             // Act
             var actualX = kF.Direction.X;

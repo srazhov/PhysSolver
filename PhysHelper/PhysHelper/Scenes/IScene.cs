@@ -4,11 +4,9 @@ namespace PhysHelper.Scenes
 {
     public interface IScene
     {
-        void AddNewObject(IPhysObject obj, ObjectRelations.ObjectRelation relations);
+        void AddNewObject(IPhysObject obj);
 
-        IEnumerable<IPhysObject> GetAllObjects();
-
-        void FindXWhenY();
+        IPhysObject[] GetAllObjects();
     }
 }
 

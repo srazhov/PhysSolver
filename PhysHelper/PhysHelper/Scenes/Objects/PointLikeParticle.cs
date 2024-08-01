@@ -1,15 +1,11 @@
-﻿using System;
+﻿using PhysHelper.SIObjects.Forces;
+using PhysHelper.SIObjects.Scalars;
+
 namespace PhysHelper.Scenes.Objects
 {
-    public class PointLikeParticle : PhysObject
+    public class PointLikeParticle(Mass mass, List<Force> forces) : PhysObject(mass, forces)
     {
-        public PointLikeParticle(double mass) : base(mass)
-        {
-        }
 
-        public PointLikeParticle() : base(0)
-        {
-        }
     }
 }
 

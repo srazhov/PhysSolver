@@ -1,22 +1,18 @@
-﻿using PhysHelper.SIObjects.Scalars;
+﻿using PhysHelper.SIObjects.Kinematics;
+using PhysHelper.SIObjects.Scalars;
 
 namespace PhysHelper.SIObjects.Forces
 {
     public class KineticFrictionForce : Force
     {
-        public KineticFrictionForce(string anotherObjId, double k, double mass, double angle) : base(mass, Constants.Forces.g_Earth, angle)
+        public KineticFrictionForce(double k, double mass, double angle) : base(
+            new Acceleration(Constants.Forces.g_Earth, 270),
+            new Mass(mass),
+            angle)
         {
-            Coefficient = new KineticFrictionCoefficient()
-            {
-                SIState = Enums.SIState.Known,
-                Quantity = k
-            };
-
-            FrictionBetweenAnotherObjectId = anotherObjId;
-            Quantity *= k;
+            Coefficient = new KineticFrictionCoefficient(k);
+            Quantity *= Coefficient.Quantity;
         }
-
-        public string FrictionBetweenAnotherObjectId { get; }
 
         public KineticFrictionCoefficient Coefficient { get; }
 
