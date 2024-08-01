@@ -10,9 +10,11 @@ namespace PhysHelper.SIObjects.Forces
             Acceleration = acceleration;
             Mass = mass;
 
-            // TODO
-            // To change behavior of assigning "Quantity" value 
-            // in case if Acceleration or Mass are not defined
+            if (Acceleration.SIState != Enums.SIState.Known || mass.SIState != Enums.SIState.Known)
+            {
+                SIState = Enums.SIState.Unimportant;
+                Quantity = 0;
+            }
         }
 
         public Force(double quantity, double angle) : base(quantity, angle)
