@@ -6,8 +6,8 @@ namespace PhysHelper.SIObjects.Forces
     public class KineticFrictionForce : Force
     {
         public KineticFrictionForce(double k, double mass, double angle) : base(
-            new Acceleration(Constants.Forces.g_Earth, 270),
             new Mass(mass),
+            new Acceleration(Constants.Forces.g_Earth, 270),
             angle)
         {
             Coefficient = new KineticFrictionCoefficient(k);

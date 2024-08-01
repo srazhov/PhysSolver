@@ -5,7 +5,7 @@ namespace PhysHelper.SIObjects.Forces
 {
     public class Force : Vector
     {
-        public Force(Acceleration acceleration, Mass mass, double angle) : base(acceleration.Quantity * mass.Quantity, angle)
+        public Force(Mass mass, Acceleration acceleration, double angle) : base(acceleration.Quantity * mass.Quantity, angle)
         {
             Acceleration = acceleration;
             Mass = mass;
