@@ -255,4 +255,51 @@ public class WeightForceParserTests
             }
         });
     }
+
+    [Test]
+    public void GroundIsPassed_MustNotAddAnyForcesToIts()
+    {
+        // Arrange
+        var query = new SceneSettings()
+        {
+            Global = null,
+            Ground = new GroundSettings()
+            {
+                Angle = 0,
+                Exists = true
+            },
+            Objects = [
+                new ObjectSettings() {
+                    Name = "m1",
+                    Mass = new MassSettings() {
+                        Quantity = 10,
+                        SiState = SIState.Known
+                    },
+                    HasKineticFriction = null,
+                    Forces = null,
+                    Angle = 0
+                }
+            ],
+            ObjectsPlacementOrder = [["ground", "m1"]]
+        };
+
+        var results = new List<IPhysObject>()
+        {
+            new Ground(),
+            new PointLikeParticle(new Mass(10), [], "m1")
+        };
+
+        var parser = new WeightForceParser();
+
+        // Act
+        parser.Parse(results, query);
+
+        // Assert
+        Assert.Multiple(() =>
+        {
+            Assert.That(results, Has.Exactly(2).Items);
+            Assert.That(results.OfType<Ground>().Single().Forces, Has.Exactly(0).Items);
+            Assert.That(results.Single(x => x.GetId() == "m1").Forces, Has.Exactly(1).Items);
+        });
+    }
 }
