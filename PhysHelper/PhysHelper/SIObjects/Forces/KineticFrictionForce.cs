@@ -8,7 +8,8 @@ namespace PhysHelper.SIObjects.Forces
         public KineticFrictionForce(double k, double mass, double angle) : base(
             new Mass(mass),
             new Acceleration(Constants.Forces.g_Earth, 270),
-            angle)
+            angle,
+            Enums.ForceType.KineticFriction)
         {
             Coefficient = new KineticFrictionCoefficient(k);
             Quantity *= Coefficient.Quantity;

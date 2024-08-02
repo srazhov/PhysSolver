@@ -16,7 +16,7 @@ namespace PhysHelper.Tests.SIObjects.Forces
             var mockAcceleration = new Mock<Acceleration>(MockBehavior.Strict);
             var mockMass = new Mock<Mass>(MockBehavior.Strict);
 
-            var force = new Force(mockMass.Object, mockAcceleration.Object, 0);
+            var force = new Force(mockMass.Object, mockAcceleration.Object, 0, ForceType.Weight);
 
             // Act
             var actual = force.UnitOfMeasure;
@@ -35,7 +35,7 @@ namespace PhysHelper.Tests.SIObjects.Forces
 
             var mockAcceleration = new Mock<Acceleration>(MockBehavior.Strict, Constants.Forces.g_Earth, angle);
             var mockMass = new Mock<Mass>(MockBehavior.Strict, mass);
-            var f = new Force(mockMass.Object, mockAcceleration.Object, angle);
+            var f = new Force(mockMass.Object, mockAcceleration.Object, angle, ForceType.Weight);
 
             // Act
             var actual = f.Magnitude;
@@ -51,7 +51,7 @@ namespace PhysHelper.Tests.SIObjects.Forces
             // Arrange
             var newtons = 1;
             var angle = 270;
-            var v = new Force(newtons, angle);
+            var v = new Force(newtons, angle, ForceType.Weight);
 
             // Act 
             var actualSiState = v.SIState;
@@ -75,7 +75,7 @@ namespace PhysHelper.Tests.SIObjects.Forces
             // Arrange
             var newtons = 1;
             var angle = 270;
-            var v = new Force(newtons, angle);
+            var v = new Force(newtons, angle, ForceType.Weight);
 
             // Act 
             var actualSiState = v.SIState;

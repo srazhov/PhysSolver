@@ -1,4 +1,5 @@
-﻿using PhysHelper.Scenes.Objects;
+﻿using PhysHelper.Enums;
+using PhysHelper.Scenes.Objects;
 using PhysHelper.Scenes.SceneSettings;
 using PhysHelper.SIObjects;
 using PhysHelper.SIObjects.Forces;
@@ -20,14 +21,14 @@ namespace PhysHelper.Parsers.PhysObjectParsers
                     continue;
                 }
 
-                obj.Forces.Add(new Force(obj.Mass, gAcc, 270));
+                obj.Forces.Add(new Force(obj.Mass, gAcc, 270, ForceType.Weight));
 
                 var curObjId = obj.GetId();
                 var placementOrder = query.ObjectsPlacementOrder.Single(x => x.Contains(curObjId));
                 for (var i = placementOrder.FindIndex(x => x == curObjId) + 1; i < placementOrder.Count; i++)
                 {
                     var anotherObj = parsedObj.Single(x => x.GetId() == placementOrder[i]);
-                    obj.Forces.Add(new Force(anotherObj.Mass, gAcc, 270));
+                    obj.Forces.Add(new Force(anotherObj.Mass, gAcc, 270, ForceType.Weight));
                 }
             }
         }

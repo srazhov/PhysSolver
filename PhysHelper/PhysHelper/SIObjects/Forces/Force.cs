@@ -1,26 +1,29 @@
-﻿using PhysHelper.SIObjects.Kinematics;
+﻿using PhysHelper.Enums;
+using PhysHelper.SIObjects.Kinematics;
 using PhysHelper.SIObjects.Scalars;
 
 namespace PhysHelper.SIObjects.Forces
 {
     public class Force : Vector
     {
-        public Force(Mass mass, Acceleration acceleration, double angle) : base(acceleration.Quantity * mass.Quantity, angle)
+        public Force(Mass mass, Acceleration acceleration, double angle, ForceType forceType) : base(acceleration.Quantity * mass.Quantity, angle)
         {
             Acceleration = acceleration;
             Mass = mass;
+            ForceType = forceType;
 
-            if (Acceleration.SIState != Enums.SIState.Known || mass.SIState != Enums.SIState.Known)
+            if (Acceleration.SIState != SIState.Known || mass.SIState != SIState.Known)
             {
-                SIState = Enums.SIState.Unimportant;
+                SIState = SIState.Unimportant;
                 Quantity = 0;
             }
         }
 
-        public Force(double quantity, double angle) : base(quantity, angle)
+        public Force(double quantity, double angle, ForceType forceType) : base(quantity, angle)
         {
             Acceleration = new Acceleration();
             Mass = new Mass();
+            ForceType = forceType;
         }
 
         public override string UnitOfMeasure => Constants.Forces.Newton;
@@ -28,6 +31,8 @@ namespace PhysHelper.SIObjects.Forces
         public Acceleration Acceleration { get; private set; }
 
         public Mass Mass { get; private set; }
+
+        public ForceType ForceType { get; private set; }
     }
 }
 

@@ -153,6 +153,7 @@ public class WeightForceParserTests
             {
                 Assert.That(actualForce.SIState, Is.EqualTo(SIState.Unimportant));
                 Assert.That(actualForce.Quantity, Is.EqualTo(0));
+                Assert.That(actualForce.ForceType, Is.EqualTo(ForceType.Weight));
 
                 Assert.That(actualForce.Mass.Quantity, Is.EqualTo(0));
                 Assert.That(actualForce.Mass.SIState, Is.EqualTo(SIState.NeedsToBeFound));
@@ -229,6 +230,7 @@ public class WeightForceParserTests
                 if (actualForce1_Obj1 != null)
                 {
                     Assert.That(actualForce1_Obj1.Quantity, Is.EqualTo(100));
+                    Assert.That(actualForce1_Obj1.ForceType, Is.EqualTo(ForceType.Weight));
                     Assert.That(actualForce1_Obj1.Acceleration.Quantity, Is.EqualTo(10));
                     Assert.That(actualForce1_Obj1.Acceleration.Angle, Is.EqualTo(270));
                 }
@@ -237,6 +239,7 @@ public class WeightForceParserTests
                 if (actualForce2_Obj1 != null)
                 {
                     Assert.That(actualForce2_Obj1.Quantity, Is.EqualTo(150));
+                    Assert.That(actualForce2_Obj1.ForceType, Is.EqualTo(ForceType.Weight));
                     Assert.That(actualForce2_Obj1.Acceleration.Quantity, Is.EqualTo(10));
                     Assert.That(actualForce2_Obj1.Acceleration.Angle, Is.EqualTo(270));
                 }
@@ -246,6 +249,7 @@ public class WeightForceParserTests
             if (actualForce_Obj2 != null)
             {
                 Assert.That(actualForce_Obj2.Quantity, Is.EqualTo(150));
+                Assert.That(actualForce_Obj2.ForceType, Is.EqualTo(ForceType.Weight));
                 Assert.That(actualForce_Obj2.Acceleration.Quantity, Is.EqualTo(10));
                 Assert.That(actualForce_Obj2.Acceleration.Angle, Is.EqualTo(270));
             }
