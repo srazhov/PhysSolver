@@ -4,5 +4,6 @@ public enum ForceType
 {
     Weight,
     Normal,
-    KineticFriction
+    KineticFriction,
+    Additional
 }
