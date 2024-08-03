@@ -1,10 +1,5 @@
 using PhysHelper.Parsers.PhysObjectParsers;
 using PhysHelper.Scenes.Objects;
-using PhysHelper.Scenes.SceneSettings;
-using PhysHelper.SIObjects;
-using PhysHelper.SIObjects.Forces;
-using PhysHelper.SIObjects.Kinematics;
-using PhysHelper.SIObjects.Scalars;
 
 namespace PhysHelper.Tests.Parsers.PhysObjectParsers;
 
@@ -15,8 +10,8 @@ public class NormalForceParserTests
     {
         // Arrange
         var parser = new NormalForceParser();
-        var results = GetDefaultObjects();
-        var query = GetDefaultSceneSettings();
+        var results = PhysObjectHelpers.GetDefaultObjects();
+        var query = PhysObjectHelpers.GetDefaultSceneSettings();
 
         // Act
         parser.Parse(results, query);
@@ -44,8 +39,8 @@ public class NormalForceParserTests
     {
         // Arrange
         var parser = new NormalForceParser();
-        var results = GetDefaultObjects();
-        var query = GetDefaultSceneSettings();
+        var results = PhysObjectHelpers.GetDefaultObjects();
+        var query = PhysObjectHelpers.GetDefaultSceneSettings();
 
         results.RemoveAll(x => x is Ground);
         query.ObjectsPlacementOrder[0].RemoveAt(0);
@@ -76,8 +71,8 @@ public class NormalForceParserTests
     {
         // Arrange
         var parser = new NormalForceParser();
-        var results = GetDefaultObjects();
-        var query = GetDefaultSceneSettings();
+        var results = PhysObjectHelpers.GetDefaultObjects();
+        var query = PhysObjectHelpers.GetDefaultSceneSettings();
         foreach (var item in query.Objects)
         {
             item.Angle = angle;
@@ -102,52 +97,5 @@ public class NormalForceParserTests
             Assert.That(m1Obj.Forces.Where(x => x.ForceType == Enums.ForceType.Normal && x.Angle == expectedNormalForceAngle), Has.Exactly(2).Items);
             Assert.That(m2Obj.Forces.Where(x => x.ForceType == Enums.ForceType.Normal && x.Angle == expectedNormalForceAngle), Has.Exactly(1).Items);
         });
-    }
-
-    private static List<IPhysObject> GetDefaultObjects()
-    {
-        var g = new Acceleration(Constants.Forces.g_Earth, 270);
-        return [
-            new Ground(),
-            new PointLikeParticle(new Mass(10), [
-                new Force(new Mass(10), g, 270, Enums.ForceType.Weight),
-                new Force(new Mass(5), g, 270, Enums.ForceType.Weight)
-            ], "m1"),
-            new PointLikeParticle(new Mass(5), [
-                new Force(new Mass(5), g, 270, Enums.ForceType.Weight)
-            ], "m2")
-        ];
-    }
-
-    private static SceneSettings GetDefaultSceneSettings()
-    {
-        return new SceneSettings()
-        {
-            Global = new GlobalSceneSettings() { },
-            Ground = new GroundSettings()
-            {
-                Exists = true,
-                Angle = 0
-            },
-            Objects = [
-                new ObjectSettings(){
-                    Name = "m1",
-                    Mass = new MassSettings() { Quantity = 10, SiState = Enums.SIState.Known },
-                    Angle = 0,
-                    Forces = null,
-                    HasKineticFriction = null
-                },
-                new ObjectSettings(){
-                    Name = "m2",
-                    Mass = new MassSettings() { Quantity = 5, SiState = Enums.SIState.Known },
-                    Angle = 0,
-                    Forces = null,
-                    HasKineticFriction = null
-                }
-            ],
-            ObjectsPlacementOrder = [
-                ["ground", "m1", "m2"]
-            ]
-        };
     }
 }
