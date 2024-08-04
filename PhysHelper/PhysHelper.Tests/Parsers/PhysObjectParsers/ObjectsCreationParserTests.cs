@@ -27,7 +27,6 @@ public class ObjectsCreationParserTests
                         SiState = Enums.SIState.Known
                     },
                     Angle = 0,
-                    HasKineticFriction = [],
                     Forces = []
                 },
                 new(){
@@ -37,11 +36,11 @@ public class ObjectsCreationParserTests
                         SiState = Enums.SIState.Known
                     },
                     Angle = 0,
-                    HasKineticFriction = [],
                     Forces = []
                 }
             ],
-            ObjectsPlacementOrder = [["ground", "m1", "m2"]]
+            ObjectsPlacementOrder = [["ground", "m1", "m2"]],
+            ObjectsFriction = null
         };
 
         var parser = new ObjectsCreationParser();
@@ -77,7 +76,6 @@ public class ObjectsCreationParserTests
                         SiState = Enums.SIState.Known
                     },
                     Angle = 0,
-                    HasKineticFriction = [],
                     Forces = []
                 },
                 new(){
@@ -87,11 +85,11 @@ public class ObjectsCreationParserTests
                         SiState = Enums.SIState.Known
                     },
                     Angle = 0,
-                    HasKineticFriction = [],
                     Forces = []
                 }
             ],
-            ObjectsPlacementOrder = [["m1", "m2"]]
+            ObjectsPlacementOrder = [["m1", "m2"]],
+            ObjectsFriction = null
         };
 
         var parser = new ObjectsCreationParser();
@@ -127,7 +125,6 @@ public class ObjectsCreationParserTests
                         SiState = Enums.SIState.NeedsToBeFound
                     },
                     Angle = 0,
-                    HasKineticFriction = [],
                     Forces = []
                 },
                 new(){
@@ -137,11 +134,11 @@ public class ObjectsCreationParserTests
                         SiState = Enums.SIState.Known
                     },
                     Angle = 0,
-                    HasKineticFriction = [],
                     Forces = []
                 }
             ],
-            ObjectsPlacementOrder = [["m1", "m2"]]
+            ObjectsPlacementOrder = [["m1", "m2"]],
+            ObjectsFriction = null
         };
 
         var parser = new ObjectsCreationParser();

@@ -39,20 +39,19 @@ public static class PhysObjectHelpers
                     Name = "m1",
                     Mass = new MassSettings() { Quantity = 10, SiState = Enums.SIState.Known },
                     Angle = 0,
-                    Forces = null,
-                    HasKineticFriction = null
+                    Forces = null
                 },
                 new ObjectSettings(){
                     Name = "m2",
                     Mass = new MassSettings() { Quantity = 5, SiState = Enums.SIState.Known },
                     Angle = 0,
                     Forces = null,
-                    HasKineticFriction = null
                 }
             ],
             ObjectsPlacementOrder = [
                 ["ground", "m1", "m2"]
-            ]
+            ],
+            ObjectsFriction = null
         };
     }
 

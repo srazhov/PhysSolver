@@ -23,12 +23,12 @@ public class WeightForceParserTests
                         Quantity = 10,
                         SiState = SIState.Known
                     },
-                    HasKineticFriction = null,
                     Forces = null,
                     Angle = 0
                 }
             ],
-            ObjectsPlacementOrder = [["m1"]]
+            ObjectsPlacementOrder = [["m1"]],
+            ObjectsFriction = null
         };
 
         var results = new List<IPhysObject>()
@@ -75,12 +75,12 @@ public class WeightForceParserTests
                         Quantity = 10,
                         SiState = Enums.SIState.Known
                     },
-                    HasKineticFriction = null,
                     Forces = null,
                     Angle = 0
                 }
             ],
-            ObjectsPlacementOrder = [["m1"]]
+            ObjectsPlacementOrder = [["m1"]],
+            ObjectsFriction = null
         };
 
         var results = new List<IPhysObject>()
@@ -124,12 +124,12 @@ public class WeightForceParserTests
                         Quantity = 0,
                         SiState = SIState.NeedsToBeFound
                     },
-                    HasKineticFriction = null,
                     Forces = null,
                     Angle = 0
                 }
             ],
-            ObjectsPlacementOrder = [["m1"]]
+            ObjectsPlacementOrder = [["m1"]],
+            ObjectsFriction = null
         };
 
         var results = new List<IPhysObject>()
@@ -186,7 +186,6 @@ public class WeightForceParserTests
                         Quantity = 10,
                         SiState = SIState.Known
                     },
-                    HasKineticFriction = null,
                     Forces = null,
                     Angle = 0
                 },
@@ -196,12 +195,12 @@ public class WeightForceParserTests
                         Quantity = 15,
                         SiState = SIState.Known
                     },
-                    HasKineticFriction = null,
                     Forces = null,
                     Angle = 0
                 }
             ],
-            ObjectsPlacementOrder = [["ground", "m1", "m2"]]
+            ObjectsPlacementOrder = [["ground", "m1", "m2"]],
+            ObjectsFriction = null
         };
 
         var results = new List<IPhysObject>()
@@ -275,12 +274,12 @@ public class WeightForceParserTests
                         Quantity = 10,
                         SiState = SIState.Known
                     },
-                    HasKineticFriction = null,
                     Forces = null,
                     Angle = 0
                 }
             ],
-            ObjectsPlacementOrder = [["ground", "m1"]]
+            ObjectsPlacementOrder = [["ground", "m1"]],
+            ObjectsFriction = null
         };
 
         var results = new List<IPhysObject>()

@@ -13,16 +13,7 @@ public class ObjectSettings
 
     public double Angle { get; set; }
 
-    public List<KineticFrictionSettings>? HasKineticFriction { get; set; }
-
     public List<ForceSettings>? Forces { get; set; }
-}
-
-public class KineticFrictionSettings
-{
-    public required string WithObj { get; set; }
-
-    public required double K { get; set; }
 }
 
 public class ForceSettings
