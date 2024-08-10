@@ -35,7 +35,7 @@ namespace PhysHelper.Parsers.PhysObjectParsers
                     {
                         var topObjMass = query.Objects.First(x => x.Name == objOrder[i]).Mass.Quantity;
                         var f = normalForces.First(x => x.Mass.Quantity == topObjMass);
-                        forcesToAdd.Add(new KineticFrictionForce(kF.K, f.Mass, f.Acceleration, kF.Angle));
+                        forcesToAdd.Add(new KineticFrictionForce(kF.Mu, f.Mass, f.Acceleration, kF.Angle));
                     }
 
                     obj.Forces.AddRange(forcesToAdd);

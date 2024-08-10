@@ -123,7 +123,7 @@ public class KineticFrictionForceParserTests
             Angle = 180,
             FirstObj = "m1",
             SecondObj = "m2",
-            K = 0.4
+            Mu = 0.4
         });
 
         // Act
@@ -184,7 +184,7 @@ public class KineticFrictionForceParserTests
             Angle = 180,
             FirstObj = "m1",
             SecondObj = "m2",
-            K = 0.4
+            Mu = 0.4
         });
 
         if (query.ObjectsFriction != null && swapObjFrictionOrder)
@@ -294,7 +294,7 @@ public class KineticFrictionForceParserTests
         query.Objects[0].Forces = [(new ForceSettings() { Quantity = 10, Angle = 0 })];
 
         query.ObjectsFriction = [
-            new KineticFrictionSettings() { FirstObj = "m1", SecondObj = "ground", K = 0.3, Angle = 180 }
+            new KineticFrictionSettings() { FirstObj = "m1", SecondObj = "ground", Mu = 0.3, Angle = 180 }
         ];
 
         if (addThirdObj)

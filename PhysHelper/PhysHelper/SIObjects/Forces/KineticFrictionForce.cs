@@ -5,13 +5,13 @@ namespace PhysHelper.SIObjects.Forces
 {
     public class KineticFrictionForce : Force
     {
-        public KineticFrictionForce(double k, Mass mass, Acceleration acceleration, double angle) : base(
+        public KineticFrictionForce(double mu, Mass mass, Acceleration acceleration, double angle) : base(
             mass,
             acceleration,
             angle,
             Enums.ForceType.KineticFriction)
         {
-            Coefficient = new KineticFrictionCoefficient(k);
+            Coefficient = new KineticFrictionCoefficient(mu);
             Quantity *= Coefficient.Quantity;
         }
 
