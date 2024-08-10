@@ -32,4 +32,6 @@ public class KineticFrictionSettings
     public required string SecondObj { get; set; }
 
     public required double K { get; set; }
+
+    public required double Angle { get; set; }
 }

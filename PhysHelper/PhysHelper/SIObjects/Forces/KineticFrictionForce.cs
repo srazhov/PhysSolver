@@ -5,9 +5,9 @@ namespace PhysHelper.SIObjects.Forces
 {
     public class KineticFrictionForce : Force
     {
-        public KineticFrictionForce(double k, double mass, double angle) : base(
-            new Mass(mass),
-            new Acceleration(Constants.Forces.g_Earth, 270),
+        public KineticFrictionForce(double k, Mass mass, Acceleration acceleration, double angle) : base(
+            mass,
+            acceleration,
             angle,
             Enums.ForceType.KineticFriction)
         {
@@ -16,17 +16,6 @@ namespace PhysHelper.SIObjects.Forces
         }
 
         public KineticFrictionCoefficient Coefficient { get; }
-
-        public override VectorQuantity Direction
-        {
-            get
-            {
-                var dir = base.Direction;
-                dir.Y = 0;
-
-                return dir;
-            }
-        }
     }
 }
 
