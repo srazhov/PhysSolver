@@ -18,8 +18,10 @@
 
         public static class Scalars
         {
+            public const string Mass = "kg";
             public const string KineticFrictionCoefficient = "";
-            public const string Mass = "m";
+            public const string SpringConstant = "";
+            public const string SpringExtension = "m";
         }
     }
 }
