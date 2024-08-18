@@ -98,4 +98,37 @@ public class NormalForceParserTests
             Assert.That(m2Obj.Forces.Where(x => x.ForceType == Enums.ForceType.Normal && x.Angle == expectedNormalForceAngle), Has.Exactly(1).Items);
         });
     }
+
+    [TestCase(0, 98.067)]
+    [TestCase(30, 84.928513)]
+    [TestCase(45, 69.343840)]
+    public void ObjectIsSittingOnAnAngledSurfaceWithStaticFricton_NormalForceMustHaveCorrectQuantity(double angle, double expectedNormalForce)
+    {
+        // Arrange
+        var parser = new NormalForceParser();
+        var results = PhysObjectHelpers.GetDefaultObjects();
+        var query = PhysObjectHelpers.GetDefaultSceneSettings();
+
+        results.RemoveAll(x => x.GetId() == "m2");
+        results[1].Forces.RemoveAll(x => x.Mass.Quantity == 5);
+
+        query.ObjectsPlacementOrder[0].RemoveAll(x => x == "m2");
+        query.Objects[0].Angle = angle;
+        query.Objects.RemoveAll(x => x.Name == "m2");
+
+        // Act
+        parser.Parse(results, query);
+
+        // Assert
+        Assert.Multiple(() =>
+        {
+            var m1Obj = results.Single(x => x.GetId() == "m1");
+
+            Assert.That(m1Obj.Forces, Has.Exactly(2).Items);
+
+            var normalForce = m1Obj.Forces.FirstOrDefault(x => x.ForceType == Enums.ForceType.Normal);
+            Assert.That(normalForce, Is.Not.Null);
+            Assert.That(normalForce?.Magnitude, Is.EqualTo(expectedNormalForce).Within(0.00001));
+        });
+    }
 }

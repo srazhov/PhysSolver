@@ -1,4 +1,5 @@
 ﻿using PhysHelper.Enums;
+using PhysHelper.Helpers;
 using PhysHelper.Scenes.Objects;
 using PhysHelper.Scenes.SceneSettings;
 using PhysHelper.SIObjects.Forces;
@@ -21,7 +22,8 @@ namespace PhysHelper.Parsers.PhysObjectParsers
                 var forcesToAdd = new List<Force>();
                 foreach (var force in obj.Forces.Where(x => x.ForceType == ForceType.Weight))
                 {
-                    forcesToAdd.Add(new Force(force.Mass, force.Acceleration, angle, ForceType.Normal));
+                    var normalForceQuantity = Math.Round(force.Quantity * Math.Sin(HelperClass.GetAngleInRadians(angle)), 5);
+                    forcesToAdd.Add(new Force(normalForceQuantity, angle, ForceType.Normal));
                 }
 
                 obj.Forces.AddRange(forcesToAdd);
@@ -29,4 +31,3 @@ namespace PhysHelper.Parsers.PhysObjectParsers
         }
     }
 }
-
