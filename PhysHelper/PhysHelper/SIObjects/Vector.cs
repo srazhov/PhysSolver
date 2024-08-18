@@ -1,4 +1,5 @@
 ﻿using PhysHelper.Enums;
+using PhysHelper.Helpers;
 
 namespace PhysHelper.SIObjects
 {
@@ -20,11 +21,6 @@ namespace PhysHelper.SIObjects
 
         private double angle;
 
-        private double GetAngleInRadians()
-        {
-            return Angle * Math.PI / 180;
-        }
-
         public double Quantity { get; set; }
 
         public double Angle
@@ -39,8 +35,8 @@ namespace PhysHelper.SIObjects
             {
                 if (direction == null)
                 {
-                    var xComp = Math.Round(Quantity * Math.Cos(GetAngleInRadians()), 5);
-                    var yComp = Math.Round(Quantity * Math.Sin(GetAngleInRadians()), 5);
+                    var xComp = Math.Round(Quantity * Math.Cos(HelperClass.GetAngleInRadians(Angle)), 5);
+                    var yComp = Math.Round(Quantity * Math.Sin(HelperClass.GetAngleInRadians(Angle)), 5);
 
                     direction = new VectorQuantity(xComp, yComp);
                 }
@@ -49,13 +45,7 @@ namespace PhysHelper.SIObjects
             }
         }
 
-        public double Magnitude
-        {
-            get
-            {
-                return Math.Sqrt(Math.Pow(Direction.X, 2) + Math.Pow(Direction.Y, 2));
-            }
-        }
+        public double Magnitude => Direction.Magnitude;
 
         public abstract string UnitOfMeasure { get; }
 
@@ -66,6 +56,8 @@ namespace PhysHelper.SIObjects
             public double X { get; set; } = x;
 
             public double Y { get; set; } = y;
+
+            public double Magnitude => Math.Round(Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2)), 5);
         }
     }
 }
