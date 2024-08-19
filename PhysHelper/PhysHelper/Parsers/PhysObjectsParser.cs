@@ -16,8 +16,8 @@ namespace PhysHelper.Parsers
                 .SetNext(new NormalForceParser()) // NormalForceParser must be after WeightForce
                 .SetNext(new AdditionalForceParser())
                 .SetNext(new KineticFrictionForceParser()) // KineticFrictionForceParser must be after NormalForce
-                .SetNext(new ElasticForceParser());
-                
+                .SetNext(new ElasticForceParser())
+                .SetNext(new NetForceParser()); // NetForceParser must be in the end
 
             var result = new List<IPhysObject>();
             parser.Parse(result, settings);
