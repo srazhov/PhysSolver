@@ -1,28 +1,13 @@
-﻿using PhysHelper.Scenes.Objects;
+﻿using PhysHelper.Parsers;
+using PhysHelper.Scenes.Objects;
 
 namespace PhysHelper.Scenes
 {
-    public class Scene : IScene
+    public class Scene(SceneSettings.SceneSettings settings) : IScene
     {
-        private List<IPhysObject> Objects { get; }
-
-        public Scene()
-        {
-            Objects = [
-                new Ground()
-            ];
-        }
+        private List<IPhysObject> Objects { get; } = PhysObjectsParser.Parse(settings);
 
         public IPhysObject[] GetAllObjects() => [.. Objects];
-
-        public void AddNewObject(IPhysObject obj)
-        {
-            var objId = obj.GetId();
-            if (!Objects.Any(x => x.GetId() == objId))
-            {
-                Objects.Add(obj);
-            }
-        }
     }
 }
 
