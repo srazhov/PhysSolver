@@ -33,6 +33,11 @@ namespace PhysHelper.SIObjects.Forces
         public Acceleration Acceleration { get; set; }
 
         public ForceType ForceType { get; private set; }
+
+        public override string ToString()
+        {
+            return $"{ForceType}: {Quantity}N at {Angle}deg";
+        }
     }
 }
 
