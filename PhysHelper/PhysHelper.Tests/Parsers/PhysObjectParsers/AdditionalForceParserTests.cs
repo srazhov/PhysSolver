@@ -7,12 +7,12 @@ namespace PhysHelper.Tests.Parsers.PhysObjectParsers;
 public class AdditionalForceParserTests
 {
     [Test]
-    public void GroundIsPassed_MustOnlyAddForcesToTheSpecifiedObjects()
+    public void GroundIsPassed_MustNotAddAnyForcesToIt()
     {
         // Arrange
         var parser = new AdditionalForceParser();
-        var results = PhysObjectHelpers.GetDefaultObjects();
-        var query = PhysObjectHelpers.GetDefaultSceneSettings();
+        var results = PhysObjectHelpers.GetDefaultObjects(g: null, angle: 0, addM2: true, addGround: true, addNormalForce: false);
+        var query = PhysObjectHelpers.GetDefaultSceneSettings(g: null, angle: 0, addM2: true, addGround: true);
 
         query.Objects[0].Forces = [new ForceSettings() { Quantity = 10, Angle = 30 }];
         query.Objects[1].Forces = [new ForceSettings() { Quantity = 1, Angle = 270 }];
@@ -24,12 +24,35 @@ public class AdditionalForceParserTests
         Assert.Multiple(() =>
         {
             var ground = results.OfType<Ground>().Single();
+
+            Assert.That(results, Has.Exactly(3).Items);
+
+            Assert.That(ground.Forces, Has.Exactly(0).Items);
+        });
+    }
+
+    [Test]
+    public void TwoObjectsArePassed_MustCorrectlyAddAdditionalForcesToThem()
+    {
+        // Arrange
+        var parser = new AdditionalForceParser();
+        var results = PhysObjectHelpers.GetDefaultObjects(g: null, angle: 0, addM2: true, addGround: true, addNormalForce: false);
+        var query = PhysObjectHelpers.GetDefaultSceneSettings(g: null, angle: 0, addM2: true, addGround: true);
+
+        query.Objects[0].Forces = [new ForceSettings() { Quantity = 10, Angle = 30 }];
+        query.Objects[1].Forces = [new ForceSettings() { Quantity = 1, Angle = 270 }];
+
+        // Act
+        parser.Parse(results, query);
+
+        // Assert
+        Assert.Multiple(() =>
+        {
             var m1Obj = results.Single(x => x.GetId() == "m1");
             var m2Obj = results.Single(x => x.GetId() == "m2");
 
             Assert.That(results, Has.Exactly(3).Items);
 
-            Assert.That(ground.Forces, Has.Exactly(0).Items);
             Assert.That(m1Obj.Forces, Has.Exactly(3).Items);
             Assert.That(m2Obj.Forces, Has.Exactly(2).Items);
 

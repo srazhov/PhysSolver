@@ -10,8 +10,8 @@ public class NormalForceParserTests
     {
         // Arrange
         var parser = new NormalForceParser();
-        var results = PhysObjectHelpers.GetDefaultObjects();
-        var query = PhysObjectHelpers.GetDefaultSceneSettings();
+        var results = PhysObjectHelpers.GetDefaultObjects(g: null, angle: 0, addM2: true, addGround: true, addNormalForce: false);
+        var query = PhysObjectHelpers.GetDefaultSceneSettings(g: null, angle: 0, addM2: true, addGround: true);
 
         // Act
         parser.Parse(results, query);
@@ -39,11 +39,8 @@ public class NormalForceParserTests
     {
         // Arrange
         var parser = new NormalForceParser();
-        var results = PhysObjectHelpers.GetDefaultObjects();
-        var query = PhysObjectHelpers.GetDefaultSceneSettings();
-
-        results.RemoveAll(x => x is Ground);
-        query.ObjectsPlacementOrder[0].RemoveAt(0);
+        var results = PhysObjectHelpers.GetDefaultObjects(g: null, angle: 0, addM2: true, addGround: false, addNormalForce: false);
+        var query = PhysObjectHelpers.GetDefaultSceneSettings(g: null, angle: 0, addM2: true, addGround: false);
 
         // Act
         parser.Parse(results, query);
@@ -56,8 +53,8 @@ public class NormalForceParserTests
 
             Assert.That(results, Has.Exactly(2).Items);
 
-            Assert.That(m1Obj.Forces, Has.Exactly(2).Items);
-            Assert.That(m2Obj.Forces, Has.Exactly(2).Items);
+            Assert.That(m1Obj.Forces, Has.Exactly(2).Items); // m1 has (m1 + m2)g. But not N
+            Assert.That(m2Obj.Forces, Has.Exactly(2).Items); // m2 has m2g + N = 0
 
             Assert.That(m1Obj.Forces.Where(x => x.ForceType == Enums.ForceType.Normal), Has.Exactly(0).Items);
             Assert.That(m2Obj.Forces.Where(x => x.ForceType == Enums.ForceType.Normal), Has.Exactly(1).Items);
@@ -71,12 +68,8 @@ public class NormalForceParserTests
     {
         // Arrange
         var parser = new NormalForceParser();
-        var results = PhysObjectHelpers.GetDefaultObjects();
-        var query = PhysObjectHelpers.GetDefaultSceneSettings();
-        foreach (var item in query.Objects)
-        {
-            item.Angle = angle;
-        }
+        var results = PhysObjectHelpers.GetDefaultObjects(g: null, angle: angle, addM2: true, addGround: true, addNormalForce: false);
+        var query = PhysObjectHelpers.GetDefaultSceneSettings(g: null, angle: angle, addM2: true, addGround: true);
 
         // Act
         parser.Parse(results, query);
@@ -106,15 +99,8 @@ public class NormalForceParserTests
     {
         // Arrange
         var parser = new NormalForceParser();
-        var results = PhysObjectHelpers.GetDefaultObjects();
-        var query = PhysObjectHelpers.GetDefaultSceneSettings();
-
-        results.RemoveAll(x => x.GetId() == "m2");
-        results[1].Forces.RemoveAll(x => x.Mass.Quantity == 5);
-
-        query.ObjectsPlacementOrder[0].RemoveAll(x => x == "m2");
-        query.Objects[0].Angle = angle;
-        query.Objects.RemoveAll(x => x.Name == "m2");
+        var results = PhysObjectHelpers.GetDefaultObjects(g: null, angle: angle, addM2: false, addGround: true, addNormalForce: false);
+        var query = PhysObjectHelpers.GetDefaultSceneSettings(g: null, angle: angle, addM2: false, addGround: true);
 
         // Act
         parser.Parse(results, query);

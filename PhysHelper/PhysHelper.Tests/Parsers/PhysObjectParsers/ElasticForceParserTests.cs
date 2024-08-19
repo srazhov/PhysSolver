@@ -12,8 +12,8 @@ public class ElasticForceParserTests
     {
         // Arrange
         var parser = new ElasticForceParser();
-        var results = PhysObjectHelpers.GetDefaultObjects();
-        var query = PhysObjectHelpers.GetDefaultSceneSettings();
+        var results = PhysObjectHelpers.GetDefaultObjects(g: null, angle: 0, addM2: true, addGround: true, addNormalForce: false);
+        var query = PhysObjectHelpers.GetDefaultSceneSettings(g: null, angle: 0, addM2: true, addGround: true);
 
         // Act
         parser.Parse(results, query);
@@ -32,8 +32,8 @@ public class ElasticForceParserTests
     {
         // Arrange
         var parser = new ElasticForceParser();
-        var results = PhysObjectHelpers.GetDefaultObjects();
-        var query = PhysObjectHelpers.GetDefaultSceneSettings();
+        var results = PhysObjectHelpers.GetDefaultObjects(g: null, angle: 0, addM2: true, addGround: true, addNormalForce: false);
+        var query = PhysObjectHelpers.GetDefaultSceneSettings(g: null, angle: 0, addM2: true, addGround: true);
 
         query.Objects.Single(x => x.Name == "m2").ElasticForce = null;
         query.Objects.Single(x => x.Name == "m1").ElasticForce = new ElasticForceSettings()

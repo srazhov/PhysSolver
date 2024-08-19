@@ -16,13 +16,8 @@ public class KineticFrictionForceParserTests
     {
         // Arrange
         var parser = new KineticFrictionForceParser();
-        var results = AddKineticFrictionForceSpecificDefaultObjects();
-        var query = AddKineticFrictionForceSpecificDefaultSceneSettings();
-
-        results.RemoveAll(x => x.GetId() == "m2");
-        results.Single(x => x.GetId() == "m1").Forces.RemoveAll(x => x.Mass.Quantity == 5);
-        query.Objects.RemoveAll(x => x.Name == "m2");
-        query.ObjectsPlacementOrder[0].RemoveAll(x => x == "m2");
+        var results = AddKineticFrictionForceSpecificDefaultObjects(addM2: false, addM3: false, hasNormalForce: true);
+        var query = AddKineticFrictionForceSpecificDefaultSceneSettings(addM2: false, addM3: false);
 
         // Act
         parser.Parse(results, query);
@@ -48,13 +43,8 @@ public class KineticFrictionForceParserTests
     {
         // Arrange
         var parser = new KineticFrictionForceParser();
-        var results = AddKineticFrictionForceSpecificDefaultObjects();
-        var query = AddKineticFrictionForceSpecificDefaultSceneSettings();
-
-        results.RemoveAll(x => x.GetId() == "m2");
-        results.Single(x => x.GetId() == "m1").Forces.RemoveAll(x => x.Mass.Quantity == 5 || x.ForceType == ForceType.Normal);
-        query.Objects.RemoveAll(x => x.Name == "m2");
-        query.ObjectsPlacementOrder[0].RemoveAll(x => x == "m2");
+        var results = AddKineticFrictionForceSpecificDefaultObjects(addM2: false, addM3: false, hasNormalForce: false);
+        var query = AddKineticFrictionForceSpecificDefaultSceneSettings(addM2: false, addM3: false);
 
         // Act
         parser.Parse(results, query);
@@ -65,7 +55,6 @@ public class KineticFrictionForceParserTests
             Assert.That(results, Has.Exactly(2).Items);
 
             var m1Obj = results.Single(x => x.GetId() == "m1");
-
             Assert.That(m1Obj.Forces, Has.Exactly(2).Items);
 
             var m1KineticFrictionForces = m1Obj.Forces.OfType<KineticFrictionForce>();
@@ -73,14 +62,13 @@ public class KineticFrictionForceParserTests
         });
     }
 
-
     [Test]
     public void TwoObjectsArePassed_M1MustHave1KineticFriction_M2ShouldNotHaveAny()
     {
         // Arrange
         var parser = new KineticFrictionForceParser();
-        var results = AddKineticFrictionForceSpecificDefaultObjects();
-        var query = AddKineticFrictionForceSpecificDefaultSceneSettings();
+        var results = AddKineticFrictionForceSpecificDefaultObjects(addM2: true, addM3: false, hasNormalForce: true);
+        var query = AddKineticFrictionForceSpecificDefaultSceneSettings(addM2: true, addM3: false);
 
         // Act
         parser.Parse(results, query);
@@ -115,8 +103,8 @@ public class KineticFrictionForceParserTests
     {
         // Arrange
         var parser = new KineticFrictionForceParser();
-        var results = AddKineticFrictionForceSpecificDefaultObjects();
-        var query = AddKineticFrictionForceSpecificDefaultSceneSettings();
+        var results = AddKineticFrictionForceSpecificDefaultObjects(addM2: true, addM3: false, hasNormalForce: true);
+        var query = AddKineticFrictionForceSpecificDefaultSceneSettings(addM2: true, addM3: false);
 
         query.ObjectsFriction?.Add(new KineticFrictionSettings()
         {
@@ -176,8 +164,8 @@ public class KineticFrictionForceParserTests
     {
         // Arrange
         var parser = new KineticFrictionForceParser();
-        var results = AddKineticFrictionForceSpecificDefaultObjects(true);
-        var query = AddKineticFrictionForceSpecificDefaultSceneSettings(true);
+        var results = AddKineticFrictionForceSpecificDefaultObjects(addM2: true, addM3: true, hasNormalForce: true);
+        var query = AddKineticFrictionForceSpecificDefaultSceneSettings(addM2: true, addM3: true);
 
         query.ObjectsFriction?.Add(new KineticFrictionSettings()
         {
@@ -259,37 +247,82 @@ public class KineticFrictionForceParserTests
         });
     }
 
-    private static List<IPhysObject> AddKineticFrictionForceSpecificDefaultObjects(bool addThirdObj = false)
+    [Test]
+    public void ObjectIsLyingOnAnAngledPlane_MustCalculateKineticFriction()
     {
-        var results = PhysObjectHelpers.GetDefaultObjects();
+        // Arrange
+        var parser = new KineticFrictionForceParser();
+        var results = PhysObjectHelpers.GetDefaultObjects(g: 10, angle: 30, addM2: false, addGround: true, addNormalForce: true);
+        var query = PhysObjectHelpers.GetDefaultSceneSettings(g: 10, angle: 30, addM2: false, addGround: true);
 
-        results[1].Forces.Add(new Force(results[1].Forces[0].Mass, results[1].Forces[0].Acceleration, 90, ForceType.Normal));
-        results[1].Forces.Add(new Force(results[1].Forces[1].Mass, results[1].Forces[1].Acceleration, 90, ForceType.Normal));
+        query.ObjectsFriction = [
+            new KineticFrictionSettings() { FirstObj = "m1", SecondObj = "ground", Mu = 0.3, Angle = 30 }
+        ];
+
+        // Act
+        parser.Parse(results, query);
+
+        // Assert
+        Assert.Multiple(() =>
+        {
+            var m1Obj = results.Single(x => x.GetId() == "m1");
+
+            Assert.That(m1Obj.Forces, Has.Exactly(3).Items);
+
+            var m1KinFrForces = m1Obj.Forces.OfType<KineticFrictionForce>().ToArray();
+
+            Assert.That(m1KinFrForces, Has.Exactly(1).Items);
+
+            var expectedK_grM1 = 0.3;
+            var expectedKinFAngle = 30;
+            var expectedKinForce = 25.98076;
+
+            var m1KineticForce1 = m1KinFrForces.Where(x => x.Mass.Quantity == 10 && x.Coefficient.Quantity == expectedK_grM1
+                && x.Angle == expectedKinFAngle);
+            Assert.That(m1KineticForce1, Has.Exactly(1).Items);
+            Assert.That(m1KineticForce1.FirstOrDefault()?.Quantity, Is.EqualTo(expectedKinForce).Within(0.0001));
+        });
+    }
+
+    private static List<IPhysObject> AddKineticFrictionForceSpecificDefaultObjects(bool addM2, bool addM3, bool hasNormalForce)
+    {
+        var results = PhysObjectHelpers.GetDefaultObjects(g: null, angle: 0, addM2: addM2, addGround: true, addNormalForce: hasNormalForce);
+
         results[1].Forces.Add(new Force(10, 0, ForceType.Additional));
 
-        results[2].Forces.Add(new Force(results[2].Forces[0].Mass, results[2].Forces[0].Acceleration, 90, ForceType.Normal));
-
-        if (addThirdObj)
+        if (addM3)
         {
             var m3ObjMass = new Mass(7);
             results.Add(new PointLikeParticle(m3ObjMass, [
                 new Force(m3ObjMass, new Acceleration(Constants.Forces.g_Earth, 270), 0, ForceType.Weight),
-                new Force(m3ObjMass, new Acceleration(Constants.Forces.g_Earth, 90), 0, ForceType.Normal)
+                new Force(7 * Constants.Forces.g_Earth, 90, ForceType.Normal)
+                {
+                    Mass = m3ObjMass,
+                    Acceleration = new Acceleration(Constants.Forces.g_Earth, 270)
+                }
             ], "m3"));
 
             results[1].Forces.Add(new Force(m3ObjMass, new Acceleration(Constants.Forces.g_Earth, 270), 270, ForceType.Weight));
-            results[1].Forces.Add(new Force(m3ObjMass, new Acceleration(Constants.Forces.g_Earth, 90), 90, ForceType.Normal));
+            results[1].Forces.Add(new Force(7 * Constants.Forces.g_Earth, 90, ForceType.Normal)
+            {
+                Mass = m3ObjMass,
+                Acceleration = new Acceleration(Constants.Forces.g_Earth, 270)
+            });
 
             results[2].Forces.Add(new Force(m3ObjMass, new Acceleration(Constants.Forces.g_Earth, 270), 270, ForceType.Weight));
-            results[2].Forces.Add(new Force(m3ObjMass, new Acceleration(Constants.Forces.g_Earth, 90), 90, ForceType.Normal));
+            results[2].Forces.Add(new Force(7 * Constants.Forces.g_Earth, 90, ForceType.Normal)
+            {
+                Mass = m3ObjMass,
+                Acceleration = new Acceleration(Constants.Forces.g_Earth, 270)
+            });
         }
 
         return results;
     }
 
-    private static SceneSettings AddKineticFrictionForceSpecificDefaultSceneSettings(bool addThirdObj = false)
+    private static SceneSettings AddKineticFrictionForceSpecificDefaultSceneSettings(bool addM2, bool addM3)
     {
-        var query = PhysObjectHelpers.GetDefaultSceneSettings();
+        var query = PhysObjectHelpers.GetDefaultSceneSettings(g: null, angle: 0, addM2: addM2, addGround: true);
 
         query.Objects[0].Forces = [(new ForceSettings() { Quantity = 10, Angle = 0 })];
 
@@ -297,7 +330,7 @@ public class KineticFrictionForceParserTests
             new KineticFrictionSettings() { FirstObj = "m1", SecondObj = "ground", Mu = 0.3, Angle = 180 }
         ];
 
-        if (addThirdObj)
+        if (addM3)
         {
             query.Objects.Add(new ObjectSettings()
             {

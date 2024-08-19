@@ -10,40 +10,8 @@ public class ObjectsCreationParserTests
     public void SceneSettingsIsPassed_MustReturnCorrectObjects()
     {
         // Arrange
-        var query = new SceneSettings()
-        {
-            Global = null,
-            Ground = new GroundSettings()
-            {
-                Angle = 0,
-                Exists = true
-            },
-            Objects =
-            [
-                new(){
-                    Name = "m1",
-                    Mass = new MassSettings() {
-                        Quantity = 10,
-                        SiState = Enums.SIState.Known
-                    },
-                    Angle = 0,
-                    Forces = []
-                },
-                new(){
-                    Name = "m2",
-                    Mass = new MassSettings() {
-                        Quantity = 10,
-                        SiState = Enums.SIState.Known
-                    },
-                    Angle = 0,
-                    Forces = []
-                }
-            ],
-            ObjectsPlacementOrder = [["ground", "m1", "m2"]],
-            ObjectsFriction = null
-        };
-
         var parser = new ObjectsCreationParser();
+        var query = PhysObjectHelpers.GetDefaultSceneSettings(g: null, angle: 0, addM2: true, addGround: true);
         var results = new List<IPhysObject>();
 
         // Act
@@ -63,36 +31,8 @@ public class ObjectsCreationParserTests
     public void GroundSettingIsNotSpecified_MustNotReturnGroundObject()
     {
         // Arrange
-        var query = new SceneSettings()
-        {
-            Global = null,
-            Ground = null,
-            Objects =
-            [
-                new(){
-                    Name = "m1",
-                    Mass = new MassSettings() {
-                        Quantity = 10,
-                        SiState = Enums.SIState.Known
-                    },
-                    Angle = 0,
-                    Forces = []
-                },
-                new(){
-                    Name = "m2",
-                    Mass = new MassSettings() {
-                        Quantity = 10,
-                        SiState = Enums.SIState.Known
-                    },
-                    Angle = 0,
-                    Forces = []
-                }
-            ],
-            ObjectsPlacementOrder = [["m1", "m2"]],
-            ObjectsFriction = null
-        };
-
         var parser = new ObjectsCreationParser();
+        var query = PhysObjectHelpers.GetDefaultSceneSettings(g: null, angle: 0, addM2: true, addGround: false);
         var results = new List<IPhysObject>();
 
         // Act
@@ -112,37 +52,11 @@ public class ObjectsCreationParserTests
     public void MassIsNotDefined_MustReturnSiState_Of_NeedsToBeKnown()
     {
         // Arrange
-        var query = new SceneSettings()
-        {
-            Global = null,
-            Ground = null,
-            Objects =
-            [
-                new(){
-                    Name = "m1",
-                    Mass = new MassSettings() {
-                        Quantity = 10,
-                        SiState = Enums.SIState.NeedsToBeFound
-                    },
-                    Angle = 0,
-                    Forces = []
-                },
-                new(){
-                    Name = "m2",
-                    Mass = new MassSettings() {
-                        Quantity = 10,
-                        SiState = Enums.SIState.Known
-                    },
-                    Angle = 0,
-                    Forces = []
-                }
-            ],
-            ObjectsPlacementOrder = [["m1", "m2"]],
-            ObjectsFriction = null
-        };
-
         var parser = new ObjectsCreationParser();
+        var query = PhysObjectHelpers.GetDefaultSceneSettings(g: null, angle: 0, addM2: true, addGround: false);
         var results = new List<IPhysObject>();
+
+        query.Objects.Single(x => x.Name == "m1").Mass = new MassSettings() { Quantity = 0, SiState = Enums.SIState.NeedsToBeFound };
 
         // Act
         parser.Parse(results, query);
@@ -157,11 +71,11 @@ public class ObjectsCreationParserTests
 
             Assert.That(actualM1, Is.Not.Null);
             Assert.That(actualM1?.Mass.SIState, Is.EqualTo(Enums.SIState.NeedsToBeFound));
-            Assert.That(actualM1?.Mass.Quantity, Is.EqualTo(10));
+            Assert.That(actualM1?.Mass.Quantity, Is.EqualTo(0));
 
             Assert.That(actualM2, Is.Not.Null);
             Assert.That(actualM2?.Mass.SIState, Is.EqualTo(Enums.SIState.Known));
-            Assert.That(actualM2?.Mass.Quantity, Is.EqualTo(10));
+            Assert.That(actualM2?.Mass.Quantity, Is.EqualTo(5));
         });
     }
 }
