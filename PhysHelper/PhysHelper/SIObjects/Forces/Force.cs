@@ -28,9 +28,9 @@ namespace PhysHelper.SIObjects.Forces
 
         public override string UnitOfMeasure => Constants.Forces.Newton;
 
-        public Acceleration Acceleration { get; private set; }
+        public Mass Mass { get; set; }
 
-        public Mass Mass { get; private set; }
+        public Acceleration Acceleration { get; set; }
 
         public ForceType ForceType { get; private set; }
     }

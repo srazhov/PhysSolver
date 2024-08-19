@@ -23,7 +23,11 @@ namespace PhysHelper.Parsers.PhysObjectParsers
                 foreach (var force in obj.Forces.Where(x => x.ForceType == ForceType.Weight))
                 {
                     var normalForceQuantity = Math.Round(force.Quantity * Math.Sin(HelperClass.GetAngleInRadians(angle)), 5);
-                    forcesToAdd.Add(new Force(normalForceQuantity, angle, ForceType.Normal));
+                    forcesToAdd.Add(new Force(normalForceQuantity, angle, ForceType.Normal)
+                    {
+                        Mass = force.Mass,
+                        Acceleration = force.Acceleration
+                    });
                 }
 
                 obj.Forces.AddRange(forcesToAdd);

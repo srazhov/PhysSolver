@@ -1,18 +1,13 @@
-﻿using PhysHelper.SIObjects.Kinematics;
-using PhysHelper.SIObjects.Scalars;
+﻿using PhysHelper.SIObjects.Scalars;
 
 namespace PhysHelper.SIObjects.Forces
 {
     public class KineticFrictionForce : Force
     {
-        public KineticFrictionForce(double mu, Mass mass, Acceleration acceleration, double angle) : base(
-            mass,
-            acceleration,
-            angle,
-            Enums.ForceType.KineticFriction)
+        public KineticFrictionForce(double mu, double normalForce, double angle, Mass mass) : base(normalForce * mu, angle, Enums.ForceType.KineticFriction)
         {
             Coefficient = new KineticFrictionCoefficient(mu);
-            Quantity *= Coefficient.Quantity;
+            Mass = mass;
         }
 
         public KineticFrictionCoefficient Coefficient { get; }
