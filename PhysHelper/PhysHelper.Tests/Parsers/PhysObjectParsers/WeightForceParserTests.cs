@@ -254,4 +254,63 @@ public class WeightForceParserTests
             }
         });
     }
+
+    [Test]
+    public void ThreeObjectsAreAdded_MustCorrectlyCalculateWeightForces()
+    {
+        // Arrange
+        var parser = new WeightForceParser();
+        var results = new List<IPhysObject>()
+        {
+            new PointLikeParticle(new Mass(10), [], "m1"),
+            new PointLikeParticle(new Mass(5), [], "m2"),
+            new PointLikeParticle(new Mass(10), [], "m3")
+        };
+
+        var query = PhysObjectHelpers.GetDefaultSceneSettings(g: 10, angle: 0, addM2: true, addGround: true);
+        query.Objects.Add(new ObjectSettings()
+        {
+            Name = "m3",
+            Mass = new MassSettings()
+            {
+                Quantity = 10,
+                SiState = SIState.Known,
+            },
+            Forces = null,
+            Angle = 0
+        });
+
+        query.ObjectsPlacementOrder[0].Add("m3");
+
+        // Act
+        parser.Parse(results, query);
+
+        // Assert
+        var obj1Forces = results.Single(x => x.GetId() == "m1").Forces;
+        var obj2Forces = results.Single(x => x.GetId() == "m2").Forces;
+        var obj3Forces = results.Single(x => x.GetId() == "m3").Forces;
+        Assert.Multiple(() =>
+        {
+            // Assert count
+            Assert.That(obj1Forces, Has.Exactly(3).Items);
+            Assert.That(obj2Forces, Has.Exactly(2).Items);
+            Assert.That(obj3Forces, Has.Exactly(1).Items);
+
+            // Assert ForceType
+            Assert.That(obj1Forces.Select(x => x.ForceType), Is.All.EqualTo(ForceType.Weight));
+            Assert.That(obj2Forces.Select(x => x.ForceType), Is.All.EqualTo(ForceType.Weight));
+            Assert.That(obj3Forces.Select(x => x.ForceType), Is.All.EqualTo(ForceType.Weight));
+
+            // Assert references
+            var obj2WeightForce = obj2Forces.Single(x => x.Mass == results.Single(x => x.GetId() == "m2").Mass);
+            var obj3WeightForce = obj3Forces.Single(x => x.Mass == results.Single(x => x.GetId() == "m3").Mass);
+
+            // Assert for m1
+            Assert.That(obj1Forces, Has.Exactly(1).Items.EqualTo(obj2WeightForce));
+            Assert.That(obj1Forces, Has.Exactly(1).Items.EqualTo(obj3WeightForce));
+
+            // Assert for m2
+            Assert.That(obj2Forces, Has.Exactly(1).Items.EqualTo(obj3WeightForce));
+        });
+    }
 }

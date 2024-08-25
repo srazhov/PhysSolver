@@ -22,8 +22,12 @@ namespace PhysHelper.Parsers.PhysObjectParsers
             foreach (var obj in parsedObj)
             {
                 var curObjId = obj.GetId();
-                var placementOrder = query.ObjectsPlacementOrder.Single(x => x.Contains(curObjId));
+                if (curObjId == Constants.GroundId)
+                {
+                    continue;
+                }
 
+                var placementOrder = query.ObjectsPlacementOrder.Single(x => x.Contains(curObjId));
                 var forcesToAdd = new List<Force>();
                 for (var i = placementOrder.FindIndex(x => x == curObjId) + 1; i < placementOrder.Count; i++)
                 {
