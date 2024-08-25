@@ -7,9 +7,9 @@ namespace PhysHelper.Scenes.Objects
     {
         private string? Id = id;
 
-        public Mass Mass { get; private set; } = mass;
+        public virtual Mass Mass { get; private set; } = mass;
 
-        public List<Force> Forces { get; private set; } = forces;
+        public virtual List<Force> Forces { get; private set; } = forces;
 
         public string GetId()
         {

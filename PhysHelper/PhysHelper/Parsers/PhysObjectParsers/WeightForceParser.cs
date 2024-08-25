@@ -16,20 +16,23 @@ namespace PhysHelper.Parsers.PhysObjectParsers
 
             foreach (var obj in parsedObj)
             {
-                if (obj is Ground)
-                {
-                    continue;
-                }
-
                 obj.Forces.Add(new Force(obj.Mass, gAcc, 270, ForceType.Weight));
+            }
 
+            foreach (var obj in parsedObj)
+            {
                 var curObjId = obj.GetId();
                 var placementOrder = query.ObjectsPlacementOrder.Single(x => x.Contains(curObjId));
+
+                var forcesToAdd = new List<Force>();
                 for (var i = placementOrder.FindIndex(x => x == curObjId) + 1; i < placementOrder.Count; i++)
                 {
-                    var anotherObj = parsedObj.Single(x => x.GetId() == placementOrder[i]);
-                    obj.Forces.Add(new Force(anotherObj.Mass, gAcc, 270, ForceType.Weight));
+                    var anotherObjWeightForce = parsedObj.Single(x => x.GetId() == placementOrder[i])
+                        .Forces.Single(x => x.ForceType == ForceType.Weight);
+                    forcesToAdd.Add(anotherObjWeightForce);
                 }
+
+                obj.Forces.AddRange(forcesToAdd);
             }
         }
     }
