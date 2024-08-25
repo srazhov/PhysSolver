@@ -11,9 +11,8 @@ public class ElasticForceParser : BaseParserHandler<List<IPhysObject>, SceneSett
     {
         foreach (var obj in parsedObj)
         {
-            var objName = obj.GetId();
-            var curElasticForce = query.Objects.SingleOrDefault(x => x.Name == objName)?.ElasticForce;
-            if (objName == Constants.GroundId || curElasticForce == null)
+            var curElasticForce = query.Objects.SingleOrDefault(x => x.Name == obj.GetId())?.ElasticForce;
+            if (curElasticForce == null)
             {
                 continue;
             }

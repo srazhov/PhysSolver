@@ -1,5 +1,4 @@
 using PhysHelper.Parsers.PhysObjectParsers;
-using PhysHelper.Scenes.Objects;
 using PhysHelper.Scenes.SceneSettings;
 using PhysHelper.SIObjects.Forces;
 
@@ -7,26 +6,6 @@ namespace PhysHelper.Tests.Parsers.PhysObjectParsers;
 
 public class ElasticForceParserTests
 {
-    [Test]
-    public void GroundIsPassed_MustNotAddAnyForcesToIt()
-    {
-        // Arrange
-        var parser = new ElasticForceParser();
-        var results = PhysObjectHelpers.GetDefaultObjects(g: null, angle: 0, addM2: true, addGround: true, addNormalForce: false);
-        var query = PhysObjectHelpers.GetDefaultSceneSettings(g: null, angle: 0, addM2: true, addGround: true);
-
-        // Act
-        parser.Parse(results, query);
-
-        // Assert
-        Assert.Multiple(() =>
-        {
-            Assert.That(results, Has.Exactly(3).Items);
-            Assert.That(results.OfType<Ground>(), Has.Exactly(1).Items);
-            Assert.That(results.OfType<Ground>().Single().Forces, Has.Exactly(0).Items);
-        });
-    }
-
     [Test]
     public void ElasticForceSettingIsPassed_MustAddElasticForceToAnObject()
     {
