@@ -106,12 +106,13 @@ public class KineticFrictionForceParserTests
         var results = AddKineticFrictionForceSpecificDefaultObjects(addM2: true, addM3: false, hasNormalForce: true);
         var query = AddKineticFrictionForceSpecificDefaultSceneSettings(addM2: true, addM3: false);
 
-        query.ObjectsFriction?.Add(new KineticFrictionSettings()
+        query.ObjectsFriction?.Add(new FrictionSettings()
         {
             Angle = 180,
-            FirstObj = "m1",
+            TargetObj = "m1",
             SecondObj = "m2",
-            Mu = 0.4
+            Mu = 0.4,
+            ObjectIsMoving = true
         });
 
         // Act
@@ -167,21 +168,22 @@ public class KineticFrictionForceParserTests
         var results = AddKineticFrictionForceSpecificDefaultObjects(addM2: true, addM3: true, hasNormalForce: true);
         var query = AddKineticFrictionForceSpecificDefaultSceneSettings(addM2: true, addM3: true);
 
-        query.ObjectsFriction?.Add(new KineticFrictionSettings()
+        query.ObjectsFriction?.Add(new FrictionSettings()
         {
             Angle = 180,
-            FirstObj = "m1",
+            TargetObj = "m1",
             SecondObj = "m2",
-            Mu = 0.4
+            Mu = 0.4,
+            ObjectIsMoving = true
         });
 
         if (query.ObjectsFriction != null && swapObjFrictionOrder)
         {
-            (query.ObjectsFriction[0].SecondObj, query.ObjectsFriction[0].FirstObj) =
-                (query.ObjectsFriction[0].FirstObj, query.ObjectsFriction[0].SecondObj);
+            (query.ObjectsFriction[0].SecondObj, query.ObjectsFriction[0].TargetObj) =
+                (query.ObjectsFriction[0].TargetObj, query.ObjectsFriction[0].SecondObj);
 
-            (query.ObjectsFriction[1].SecondObj, query.ObjectsFriction[1].FirstObj) =
-                (query.ObjectsFriction[1].FirstObj, query.ObjectsFriction[1].SecondObj);
+            (query.ObjectsFriction[1].SecondObj, query.ObjectsFriction[1].TargetObj) =
+                (query.ObjectsFriction[1].TargetObj, query.ObjectsFriction[1].SecondObj);
         }
 
         // Act
@@ -256,7 +258,7 @@ public class KineticFrictionForceParserTests
         var query = PhysObjectHelpers.GetDefaultSceneSettings(g: 10, angle: 30, addM2: false, addGround: true);
 
         query.ObjectsFriction = [
-            new KineticFrictionSettings() { FirstObj = "m1", SecondObj = "ground", Mu = 0.3, Angle = 30 }
+            new FrictionSettings() { TargetObj = "m1", SecondObj = "ground", Mu = 0.3, Angle = 30, ObjectIsMoving = true }
         ];
 
         // Act
@@ -327,7 +329,7 @@ public class KineticFrictionForceParserTests
         query.Objects[0].Forces = [(new ForceSettings() { Quantity = 10, Angle = 0 })];
 
         query.ObjectsFriction = [
-            new KineticFrictionSettings() { FirstObj = "m1", SecondObj = "ground", Mu = 0.3, Angle = 180 }
+            new FrictionSettings() { TargetObj = "m1", SecondObj = "ground", Mu = 0.3, Angle = 180, ObjectIsMoving = true }
         ];
 
         if (addM3)

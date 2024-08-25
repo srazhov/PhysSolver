@@ -20,7 +20,6 @@ public class ObjectSettings
 
 public class ElasticForceSettings
 {
-
     public double RestingLength { get; set; }
 
     public double X { get; set; }

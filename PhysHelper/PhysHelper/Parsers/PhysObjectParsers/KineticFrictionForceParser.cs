@@ -25,9 +25,9 @@ namespace PhysHelper.Parsers.PhysObjectParsers
 
                 var curId = obj.GetId();
                 var objOrder = query.ObjectsPlacementOrder.Single(x => x.Contains(curId));
-                foreach (var kF in query.ObjectsFriction.Where(x => x.FirstObj == curId || x.SecondObj == curId))
+                foreach (var kF in query.ObjectsFriction.Where(x => x.TargetObj == curId || x.SecondObj == curId))
                 {
-                    var bottomObjId = objOrder.IndexOf(kF.FirstObj) < objOrder.IndexOf(kF.SecondObj) ? kF.FirstObj : kF.SecondObj;
+                    var bottomObjId = objOrder.IndexOf(kF.TargetObj) < objOrder.IndexOf(kF.SecondObj) ? kF.TargetObj : kF.SecondObj;
                     var startFromId = bottomObjId == curId ? curId : bottomObjId;
 
                     var forcesToAdd = new List<KineticFrictionForce>();

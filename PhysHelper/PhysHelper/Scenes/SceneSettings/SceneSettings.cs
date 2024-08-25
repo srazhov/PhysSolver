@@ -10,7 +10,7 @@ public class SceneSettings
 
     public required List<List<string>> ObjectsPlacementOrder { get; set; }
 
-    public List<KineticFrictionSettings>? ObjectsFriction { get; set; }
+    public List<FrictionSettings>? ObjectsFriction { get; set; }
 }
 
 public class GlobalSceneSettings
@@ -25,13 +25,15 @@ public class GroundSettings
     public double Angle { get; set; }
 }
 
-public class KineticFrictionSettings
+public class FrictionSettings
 {
-    public required string FirstObj { get; set; }
+    public required string TargetObj { get; set; }
 
     public required string SecondObj { get; set; }
 
     public required double Mu { get; set; }
 
     public required double Angle { get; set; }
+
+    public required bool ObjectIsMoving { get; set; }
 }

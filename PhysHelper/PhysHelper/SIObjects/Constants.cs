@@ -20,6 +20,7 @@
         {
             public const string Mass = "kg";
             public const string KineticFrictionCoefficient = "";
+            public const string StaticFrictionCoefficient = "";
             public const string SpringConstant = "";
             public const string SpringExtension = "m";
         }

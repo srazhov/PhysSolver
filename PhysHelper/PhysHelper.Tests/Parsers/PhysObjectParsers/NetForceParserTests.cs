@@ -105,7 +105,7 @@ public class NetForceParserTests
         var m2Obj = results.Single(x => x.GetId() == "m2");
         m2Obj.Forces.Add(new Force(25, 30, ForceType.StaticFriction)); // Static Friction force for m2
 
-        query.ObjectsFriction?.Add(new KineticFrictionSettings() { Angle = 30, FirstObj = "ground", SecondObj = "m1", Mu = 0.4 });
+        query.ObjectsFriction?.Add(new FrictionSettings() { Angle = 30, TargetObj = "ground", SecondObj = "m1", Mu = 0.4, ObjectIsMoving = true });
 
         // Act
         parser.Parse(results, query);
