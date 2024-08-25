@@ -12,8 +12,7 @@ namespace PhysHelper.Parsers.PhysObjectParsers
         {
             foreach (var obj in parsedObj)
             {
-                if (obj is Ground ||
-                    query.ObjectsPlacementOrder.Any(x => x.FindIndex(y => y == obj.GetId()) == 0))
+                if (query.ObjectsPlacementOrder.Any(x => x.FindIndex(y => y == obj.GetId()) == 0))
                 {
                     continue;
                 }

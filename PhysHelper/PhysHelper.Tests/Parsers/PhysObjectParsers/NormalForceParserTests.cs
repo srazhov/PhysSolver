@@ -6,35 +6,6 @@ namespace PhysHelper.Tests.Parsers.PhysObjectParsers;
 public class NormalForceParserTests
 {
     [Test]
-    public void GroundIsPassed_MustNotAddAnyForceToIt()
-    {
-        // Arrange
-        var parser = new NormalForceParser();
-        var results = PhysObjectHelpers.GetDefaultObjects(g: null, angle: 0, addM2: true, addGround: true, addNormalForce: false);
-        var query = PhysObjectHelpers.GetDefaultSceneSettings(g: null, angle: 0, addM2: true, addGround: true);
-
-        // Act
-        parser.Parse(results, query);
-
-        // Assert
-        Assert.Multiple(() =>
-        {
-            var ground = results.OfType<Ground>().Single();
-            var m1Obj = results.Single(x => x.GetId() == "m1");
-            var m2Obj = results.Single(x => x.GetId() == "m2");
-
-            Assert.That(results, Has.Exactly(3).Items);
-
-            Assert.That(ground.Forces, Has.Exactly(0).Items);
-            Assert.That(m1Obj.Forces, Has.Exactly(4).Items);
-            Assert.That(m2Obj.Forces, Has.Exactly(2).Items);
-
-            Assert.That(m1Obj.Forces.Where(x => x.ForceType == Enums.ForceType.Normal), Has.Exactly(2).Items);
-            Assert.That(m2Obj.Forces.Where(x => x.ForceType == Enums.ForceType.Normal), Has.Exactly(1).Items);
-        });
-    }
-
-    [Test]
     public void ObjectDoesntHaveASurfaceBelow_MustNotHaveANormalForce()
     {
         // Arrange
