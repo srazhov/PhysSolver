@@ -14,10 +14,11 @@ public static class PhysObjectHelpers
     public static List<IPhysObject> GetDefaultObjects(double? g, double angle, bool addM2, bool addGround, bool addNormalForce)
     {
         var grav = new Acceleration(g ?? Constants.Forces.g_Earth, 270);
+        var m1Mass = new Mass(10);
         var results = new List<IPhysObject>()
         {
-            new PointLikeParticle(new Mass(10), [
-                new Force(new Mass(10), grav, 270, ForceType.Weight)
+            new PointLikeParticle(m1Mass, [
+                new Force(m1Mass, grav, 270, ForceType.Weight)
             ], "m1"),
         };
 
@@ -29,10 +30,13 @@ public static class PhysObjectHelpers
         var m1 = results.Single(x => x.GetId() == "m1");
         if (addM2)
         {
-            m1.Forces.Add(new Force(new Mass(5), grav, 270, ForceType.Weight));
-            results.Add(new PointLikeParticle(new Mass(5), [
-                new Force(new Mass(5), grav, 270, ForceType.Weight)
-            ], "m2"));
+            var m2Mass = new Mass(5);
+            var m2 = new PointLikeParticle(m2Mass, [
+                new Force(m2Mass, grav, 270, ForceType.Weight)
+            ], "m2");
+
+            results.Add(m2);
+            m1.Forces.Add(m2.Forces.Single()); // add m2's weight to m1
         }
 
         if (addNormalForce)

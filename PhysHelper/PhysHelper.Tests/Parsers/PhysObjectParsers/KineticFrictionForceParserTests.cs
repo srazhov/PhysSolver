@@ -12,33 +12,6 @@ namespace PhysHelper.Tests.Parsers.PhysObjectParsers;
 public class KineticFrictionForceParserTests
 {
     [Test]
-    public void GroundIsPassed_MustNotAddAnyForcesToIt()
-    {
-        // Arrange
-        var parser = new KineticFrictionForceParser();
-        var results = AddKineticFrictionForceSpecificDefaultObjects(addM2: false, addM3: false, hasNormalForce: true);
-        var query = AddKineticFrictionForceSpecificDefaultSceneSettings(addM2: false, addM3: false);
-
-        // Act
-        parser.Parse(results, query);
-
-        // Assert
-        Assert.Multiple(() =>
-        {
-            Assert.That(results, Has.Exactly(2).Items);
-
-            var ground = results.OfType<Ground>().Single();
-            var m1Obj = results.Single(x => x.GetId() == "m1");
-
-            Assert.That(ground.Forces, Has.Exactly(0).Items);
-            Assert.That(m1Obj.Forces, Has.Exactly(4).Items);
-
-            var m1KineticFrictionForces = m1Obj.Forces.OfType<KineticFrictionForce>();
-            Assert.That(m1Obj.Forces.OfType<KineticFrictionForce>(), Has.Exactly(1).Items);
-        });
-    }
-
-    [Test]
     public void ObjectHasNoNormalForce_MustSkipIt()
     {
         // Arrange
@@ -59,6 +32,38 @@ public class KineticFrictionForceParserTests
 
             var m1KineticFrictionForces = m1Obj.Forces.OfType<KineticFrictionForce>();
             Assert.That(m1Obj.Forces.OfType<KineticFrictionForce>(), Has.Exactly(0).Items);
+        });
+    }
+
+    [Test]
+    public void TwoObjectsThatAreNotMovingPassed_MustSkipThem()
+    {
+        // Arrange
+        var parser = new KineticFrictionForceParser();
+        var results = AddKineticFrictionForceSpecificDefaultObjects(addM2: true, addM3: false, hasNormalForce: true);
+        var query = AddKineticFrictionForceSpecificDefaultSceneSettings(addM2: true, addM3: false);
+
+        if (query.ObjectsFriction == null)
+        {
+            throw new ArgumentException("query.ObjectsFriction must not be null");
+        }
+
+        query.ObjectsFriction.Single().ObjectIsMoving = false;
+
+        // Act
+        parser.Parse(results, query);
+
+        // Assert
+        Assert.Multiple(() =>
+        {
+            var m1Obj = results.Single(x => x.GetId() == "m1");
+            var m2Obj = results.Single(x => x.GetId() == "m2");
+
+            Assert.That(m1Obj.Forces, Has.Exactly(5).Items);
+            Assert.That(m2Obj.Forces, Has.Exactly(2).Items);
+
+            Assert.That(m1Obj.Forces.OfType<KineticFrictionForce>(), Has.Exactly(0).Items);
+            Assert.That(m2Obj.Forces.OfType<KineticFrictionForce>(), Has.Exactly(0).Items);
         });
     }
 
@@ -250,7 +255,7 @@ public class KineticFrictionForceParserTests
     }
 
     [Test]
-    public void ObjectIsLyingOnAnAngledPlane_MustCalculateKineticFriction()
+    public void ObjectIsSlidingOnAnAngledPlane_MustCalculateKineticFriction()
     {
         // Arrange
         var parser = new KineticFrictionForceParser();
@@ -295,27 +300,30 @@ public class KineticFrictionForceParserTests
         if (addM3)
         {
             var m3ObjMass = new Mass(7);
+            var acceleration = new Acceleration(Constants.Forces.g_Earth, 270);
+            var m3WeightForce = new Force(m3ObjMass, acceleration, 0, ForceType.Weight);
+
             results.Add(new PointLikeParticle(m3ObjMass, [
-                new Force(m3ObjMass, new Acceleration(Constants.Forces.g_Earth, 270), 0, ForceType.Weight),
+                m3WeightForce,
                 new Force(7 * Constants.Forces.g_Earth, 90, ForceType.Normal)
                 {
                     Mass = m3ObjMass,
-                    Acceleration = new Acceleration(Constants.Forces.g_Earth, 270)
+                    Acceleration = acceleration
                 }
             ], "m3"));
 
-            results[1].Forces.Add(new Force(m3ObjMass, new Acceleration(Constants.Forces.g_Earth, 270), 270, ForceType.Weight));
+            results[1].Forces.Add(m3WeightForce);
             results[1].Forces.Add(new Force(7 * Constants.Forces.g_Earth, 90, ForceType.Normal)
             {
                 Mass = m3ObjMass,
-                Acceleration = new Acceleration(Constants.Forces.g_Earth, 270)
+                Acceleration = acceleration
             });
 
-            results[2].Forces.Add(new Force(m3ObjMass, new Acceleration(Constants.Forces.g_Earth, 270), 270, ForceType.Weight));
+            results[2].Forces.Add(m3WeightForce);
             results[2].Forces.Add(new Force(7 * Constants.Forces.g_Earth, 90, ForceType.Normal)
             {
                 Mass = m3ObjMass,
-                Acceleration = new Acceleration(Constants.Forces.g_Earth, 270)
+                Acceleration = acceleration
             });
         }
 

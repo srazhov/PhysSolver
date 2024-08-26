@@ -25,7 +25,7 @@ namespace PhysHelper.Parsers.PhysObjectParsers
 
                 var curId = obj.GetId();
                 var objOrder = query.ObjectsPlacementOrder.Single(x => x.Contains(curId));
-                foreach (var kF in query.ObjectsFriction.Where(x => x.TargetObj == curId || x.SecondObj == curId))
+                foreach (var kF in query.ObjectsFriction.Where(x => x.ObjectIsMoving && (x.TargetObj == curId || x.SecondObj == curId)))
                 {
                     var bottomObjId = objOrder.IndexOf(kF.TargetObj) < objOrder.IndexOf(kF.SecondObj) ? kF.TargetObj : kF.SecondObj;
                     var startFromId = bottomObjId == curId ? curId : bottomObjId;
@@ -33,9 +33,9 @@ namespace PhysHelper.Parsers.PhysObjectParsers
                     var forcesToAdd = new List<KineticFrictionForce>();
                     for (int i = objOrder.IndexOf(startFromId) + 1; i < objOrder.Count; i++)
                     {
-                        var topObjMass = query.Objects.First(x => x.Name == objOrder[i]).Mass.Quantity;
-                        var f = normalForces.First(x => x.Mass.Quantity == topObjMass);
-                        forcesToAdd.Add(new KineticFrictionForce(kF.Mu, f.Quantity, kF.Angle, f.Mass));
+                        var topObjMass = parsedObj.Single(x => x.GetId() == objOrder[i]).Mass;
+                        var f = normalForces.Single(x => x.Mass == topObjMass); // Search by object reference
+                        forcesToAdd.Add(new KineticFrictionForce(kF.Mu, f, kF.Angle));
                     }
 
                     obj.Forces.AddRange(forcesToAdd);

@@ -99,8 +99,10 @@ public class NetForceParserTests
         var query = PhysObjectHelpers.GetDefaultSceneSettings(g: 10, angle: 30, addM2: true, addGround: true);
 
         var m1Obj = results.Single(x => x.GetId() == "m1");
-        m1Obj.Forces.Add(new KineticFrictionForce(0.4, 86.60254, 30, m1Obj.Forces[0].Mass)); // Kinetic force of m1
-        m1Obj.Forces.Add(new KineticFrictionForce(0.4, 43.30127, 30, m1Obj.Forces[1].Mass)); // Kinetic force of m2
+        m1Obj.Forces.Add(new KineticFrictionForce(0.4,
+            m1Obj.Forces.Single(x => x.Mass.Quantity == 10 && x.ForceType == ForceType.Normal), 30)); // Kinetic force of m1
+        m1Obj.Forces.Add(new KineticFrictionForce(0.4,
+            m1Obj.Forces.Single(x => x.Mass.Quantity == 5 && x.ForceType == ForceType.Normal), 30)); // Kinetic force of m2
 
         var m2Obj = results.Single(x => x.GetId() == "m2");
         m2Obj.Forces.Add(new Force(25, 30, ForceType.StaticFriction)); // Static Friction force for m2
