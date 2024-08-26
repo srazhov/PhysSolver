@@ -2,7 +2,6 @@ using System.Numerics;
 using PhysHelper.Enums;
 using PhysHelper.Scenes.Objects;
 using PhysHelper.Scenes.SceneSettings;
-using PhysHelper.SIObjects;
 using PhysHelper.SIObjects.Forces;
 using static PhysHelper.SIObjects.Vector;
 
@@ -14,16 +13,10 @@ public class NetForceParser : BaseParserHandler<List<IPhysObject>, SceneSettings
     {
         foreach (var obj in parsedObj)
         {
-            if (obj.GetId() == Constants.GroundId)
-            {
-                continue;
-            }
-
-            if (obj.Forces.All(x => x.SIState == SIState.Known))
+            if (obj.Forces.Count > 0 && obj.Forces.All(x => x.SIState == SIState.Known))
             {
                 var netForce = GetNetForce(obj.Forces);
                 obj.Forces.Add(netForce);
-                continue;
             }
         }
     }
