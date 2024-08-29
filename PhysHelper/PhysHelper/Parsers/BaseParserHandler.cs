@@ -13,7 +13,7 @@
         public IParserHandler<T, K> SetNext(IParserHandler<T, K> handler)
         {
             NextHandler = handler;
-            return this;
+            return NextHandler;
         }
 
         protected abstract void Handle(T parsedObj, K query);
