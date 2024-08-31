@@ -8,5 +8,6 @@ public enum ForceType
     KineticFriction,
     Elastic,
     Additional,
+    Tension,
     Net
 }
