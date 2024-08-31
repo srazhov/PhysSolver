@@ -7,19 +7,19 @@ namespace PhysHelper.SIObjects.Forces;
 public class StaticForce : Force
 {
     // TODO
-    public StaticForce(Force weightForce, StaticFrictionCoefficient coefficient, double angle) : base(weightForce.Mass, weightForce.Acceleration, angle, ForceType.StaticFriction)
+    public StaticForce(Force normalForce, StaticFrictionCoefficient coefficient, double angle) : base(normalForce.Mass, normalForce.Acceleration, angle, ForceType.StaticFriction)
     {
-        if (weightForce.ForceType != ForceType.Weight)
+        if (normalForce.ForceType != ForceType.Normal)
         {
-            throw new ArgumentException("Provided force is not a Weight Force", nameof(weightForce));
+            throw new ArgumentException("Provided force is not a Normal Force", nameof(normalForce));
         }
 
-        Quantity = Math.Abs(Math.Round(weightForce.Quantity * Math.Cos(HelperClass.GetAngleInRadians(angle)), 5));
-        WeightForce = weightForce;
+        Quantity = Math.Abs(Math.Round(normalForce.Quantity * Math.Cos(HelperClass.GetAngleInRadians(angle)), 5));
+        this.NormalForce = normalForce;
         Coefficient = coefficient;
     }
 
-    public Force WeightForce { get; set; }
+    public Force NormalForce { get; set; }
 
     public StaticFrictionCoefficient Coefficient { get; set; }
 }
