@@ -64,7 +64,7 @@ namespace PhysHelper.Tests.SIObjects.Forces
 
                 Assert.That(actualAcceleration, Is.Not.Null);
                 Assert.That(actualAcceleration.SIState, Is.EqualTo(SIState.Unimportant));
-                Assert.That(actualAcceleration.Quantity, Is.EqualTo(0));
+                Assert.That(actualAcceleration.Quantity, Is.NaN);
                 Assert.That(actualAcceleration.Angle, Is.EqualTo(0));
             });
         }
@@ -88,7 +88,7 @@ namespace PhysHelper.Tests.SIObjects.Forces
 
                 Assert.That(actualMass, Is.Not.Null);
                 Assert.That(actualMass.SIState, Is.EqualTo(SIState.Unimportant));
-                Assert.That(actualMass.Quantity, Is.EqualTo(0));
+                Assert.That(actualMass.Quantity, Is.NaN);
             });
         }
     }

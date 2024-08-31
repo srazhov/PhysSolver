@@ -345,7 +345,7 @@ public class KineticFrictionForceParserTests
             query.Objects.Add(new ObjectSettings()
             {
                 Name = "m3",
-                Mass = new MassSettings() { Quantity = 7, SiState = SIState.Known },
+                Mass = new QuantitySettings() { Quantity = 7, SiState = SIState.Known },
                 Angle = 0,
                 Forces = []
             });

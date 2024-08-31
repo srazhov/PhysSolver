@@ -75,7 +75,7 @@ namespace PhysHelper.Tests.SIObjects
             Assert.Multiple(() =>
             {
                 Assert.That(actualSiState, Is.EqualTo(SIState.Unimportant));
-                Assert.That(actualQuantity, Is.EqualTo(0));
+                Assert.That(actualQuantity, Is.NaN);
                 Assert.That(actualAngle, Is.EqualTo(0));
             });
         }

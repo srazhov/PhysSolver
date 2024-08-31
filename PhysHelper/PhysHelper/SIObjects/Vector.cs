@@ -21,7 +21,13 @@ namespace PhysHelper.SIObjects
 
         private double angle;
 
-        public double Quantity { get; set; }
+        private double quantity;
+
+        public double Quantity
+        {
+            get => SIState == SIState.Known ? quantity : double.NaN;
+            set => quantity = value;
+        }
 
         public double Angle
         {
@@ -49,7 +55,7 @@ namespace PhysHelper.SIObjects
 
         public abstract string UnitOfMeasure { get; }
 
-        public SIState SIState { get; protected set; }
+        public SIState SIState { get; set; }
 
         public class VectorQuantity(double x, double y)
         {

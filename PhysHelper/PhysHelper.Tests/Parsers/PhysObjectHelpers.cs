@@ -7,7 +7,7 @@ using PhysHelper.SIObjects.Forces;
 using PhysHelper.SIObjects.Kinematics;
 using PhysHelper.SIObjects.Scalars;
 
-namespace PhysHelper.Tests.Parsers.PhysObjectParsers;
+namespace PhysHelper.Tests.Parsers;
 
 public static class PhysObjectHelpers
 {
@@ -81,7 +81,7 @@ public static class PhysObjectHelpers
             Objects = [
                 new ObjectSettings(){
                     Name = "m1",
-                    Mass = new MassSettings() { Quantity = 10, SiState = SIState.Known },
+                    Mass = new QuantitySettings() { Quantity = 10, SiState = SIState.Known },
                     Angle = angle,
                     Forces = null,
                     ElasticForce = null
@@ -109,7 +109,7 @@ public static class PhysObjectHelpers
             query.Objects.Add(new ObjectSettings()
             {
                 Name = "m2",
-                Mass = new MassSettings() { Quantity = 5, SiState = SIState.Known },
+                Mass = new QuantitySettings() { Quantity = 5, SiState = SIState.Known },
                 Angle = angle,
                 Forces = null,
                 ElasticForce = null
@@ -119,5 +119,28 @@ public static class PhysObjectHelpers
         }
 
         return query;
+    }
+
+    public static void AssertOneForce(IEnumerable<Force>? forces, ForceType reqForceType, double reqQuantity, double reqAngle)
+    {
+        var force = forces?.SingleOrDefault(x => x.ForceType == reqForceType);
+        if (force == null)
+        {
+            Assert.Fail($"Could not find any force of type {reqForceType}");
+            return;
+        }
+
+        Assert.Multiple(() =>
+        {
+            if (double.IsNaN(reqQuantity))
+            {
+                Assert.That(force.Quantity, Is.NaN, $"{reqForceType} force's quantity must be NaN");
+            }
+            else
+            {
+                Assert.That(force.Quantity, Is.EqualTo(reqQuantity).Within(0.00001), $"{reqForceType} force doesn't have correct quantity");
+            }
+            Assert.That(force.Angle, Is.EqualTo(reqAngle).Within(0.00001), $"{reqForceType} force doesn't have correct angle");
+        });
     }
 }

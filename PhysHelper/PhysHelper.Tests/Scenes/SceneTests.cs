@@ -19,7 +19,7 @@ namespace PhysHelper.Tests.Scenes
 
                 },
                 Objects = [],
-                ObjectsPlacementOrder = [],
+                ObjectsPlacementOrder = [["ground"]],
                 ObjectsFriction = null,
                 Global = null
             };

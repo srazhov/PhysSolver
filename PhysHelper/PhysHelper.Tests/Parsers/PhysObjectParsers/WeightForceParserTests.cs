@@ -19,7 +19,7 @@ public class WeightForceParserTests
             Objects = [
                 new ObjectSettings() {
                     Name = "m1",
-                    Mass = new MassSettings() {
+                    Mass = new QuantitySettings() {
                         Quantity = 10,
                         SiState = SIState.Known
                     },
@@ -71,7 +71,7 @@ public class WeightForceParserTests
             Objects = [
                 new ObjectSettings() {
                     Name = "m1",
-                    Mass = new MassSettings() {
+                    Mass = new QuantitySettings() {
                         Quantity = 10,
                         SiState = SIState.Known
                     },
@@ -120,7 +120,7 @@ public class WeightForceParserTests
             Objects = [
                 new ObjectSettings() {
                     Name = "m1",
-                    Mass = new MassSettings() {
+                    Mass = new QuantitySettings() {
                         Quantity = 0,
                         SiState = SIState.NeedsToBeFound
                     },
@@ -152,10 +152,10 @@ public class WeightForceParserTests
             if (actualForce != null)
             {
                 Assert.That(actualForce.SIState, Is.EqualTo(SIState.Unimportant));
-                Assert.That(actualForce.Quantity, Is.EqualTo(0));
+                Assert.That(actualForce.Quantity, Is.NaN);
                 Assert.That(actualForce.ForceType, Is.EqualTo(ForceType.Weight));
 
-                Assert.That(actualForce.Mass.Quantity, Is.EqualTo(0));
+                Assert.That(actualForce.Mass.Quantity, Is.NaN);
                 Assert.That(actualForce.Mass.SIState, Is.EqualTo(SIState.NeedsToBeFound));
 
                 Assert.That(actualForce.Acceleration.Quantity, Is.EqualTo(9.8067));
@@ -182,7 +182,7 @@ public class WeightForceParserTests
             Objects = [
                 new ObjectSettings() {
                     Name = "m1",
-                    Mass = new MassSettings() {
+                    Mass = new QuantitySettings() {
                         Quantity = 10,
                         SiState = SIState.Known
                     },
@@ -191,7 +191,7 @@ public class WeightForceParserTests
                 },
                 new ObjectSettings() {
                     Name = "m2",
-                    Mass = new MassSettings() {
+                    Mass = new QuantitySettings() {
                         Quantity = 15,
                         SiState = SIState.Known
                     },
@@ -271,7 +271,7 @@ public class WeightForceParserTests
         query.Objects.Add(new ObjectSettings()
         {
             Name = "m3",
-            Mass = new MassSettings()
+            Mass = new QuantitySettings()
             {
                 Quantity = 10,
                 SiState = SIState.Known,

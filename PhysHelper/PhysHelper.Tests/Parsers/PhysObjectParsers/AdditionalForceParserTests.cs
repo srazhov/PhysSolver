@@ -1,3 +1,4 @@
+using PhysHelper.Enums;
 using PhysHelper.Parsers.PhysObjectParsers;
 using PhysHelper.Scenes.Objects;
 using PhysHelper.Scenes.SceneSettings;
@@ -39,8 +40,8 @@ public class AdditionalForceParserTests
         var results = PhysObjectHelpers.GetDefaultObjects(g: null, angle: 0, addM2: true, addGround: true, addNormalForce: false);
         var query = PhysObjectHelpers.GetDefaultSceneSettings(g: null, angle: 0, addM2: true, addGround: true);
 
-        query.Objects[0].Forces = [new ForceSettings() { Quantity = 10, Angle = 30 }];
-        query.Objects[1].Forces = [new ForceSettings() { Quantity = 1, Angle = 270 }];
+        query.Objects[0].Forces = [new ForceSettings() { Quantity = 10, Angle = 30, SiState = SIState.Known }];
+        query.Objects[1].Forces = [new ForceSettings() { Quantity = 1, Angle = 270, SiState = SIState.Known }];
 
         // Act
         parser.Parse(results, query);

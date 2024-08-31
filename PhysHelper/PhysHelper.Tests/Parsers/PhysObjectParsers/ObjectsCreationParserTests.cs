@@ -56,7 +56,7 @@ public class ObjectsCreationParserTests
         var query = PhysObjectHelpers.GetDefaultSceneSettings(g: null, angle: 0, addM2: true, addGround: false);
         var results = new List<IPhysObject>();
 
-        query.Objects.Single(x => x.Name == "m1").Mass = new MassSettings() { Quantity = 0, SiState = Enums.SIState.NeedsToBeFound };
+        query.Objects.Single(x => x.Name == "m1").Mass = new QuantitySettings() { Quantity = 0, SiState = Enums.SIState.NeedsToBeFound };
 
         // Act
         parser.Parse(results, query);
@@ -71,7 +71,7 @@ public class ObjectsCreationParserTests
 
             Assert.That(actualM1, Is.Not.Null);
             Assert.That(actualM1?.Mass.SIState, Is.EqualTo(Enums.SIState.NeedsToBeFound));
-            Assert.That(actualM1?.Mass.Quantity, Is.EqualTo(0));
+            Assert.That(actualM1?.Mass.Quantity, Is.NaN);
 
             Assert.That(actualM2, Is.Not.Null);
             Assert.That(actualM2?.Mass.SIState, Is.EqualTo(Enums.SIState.Known));

@@ -11,7 +11,7 @@ public class ObjectSettings
     public double Angle { get; set; }
 
     [Required]
-    public required MassSettings Mass { get; set; }
+    public required QuantitySettings Mass { get; set; }
 
     public ElasticForceSettings? ElasticForce { get; set; }
 
@@ -34,9 +34,15 @@ public class ForceSettings
     public double Quantity { get; set; }
 
     public double Angle { get; set; }
+
+    public SIState SiState { get; set; }
+
+    public QuantitySettings? Acceleration { get; set; }
+
+    public bool IsNetForce { get; set; }
 }
 
-public class MassSettings
+public class QuantitySettings
 {
     public double Quantity { get; set; }
 
