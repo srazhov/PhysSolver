@@ -1,4 +1,5 @@
 using PhysHelper.Enums;
+using PhysHelper.Helpers;
 using PhysHelper.Scenes.Objects;
 using PhysHelper.Scenes.SceneSettings;
 using PhysHelper.SIObjects.Forces;
@@ -23,33 +24,51 @@ public class TensionForceParser : BaseParserHandler<List<IPhysObject>, SceneSett
             }
 
             var secondObj = parsedObj.Single(x => x.GetId() == tensionSetting.SecondObj);
-            double totalX = 0;
+            double resultTensionForce = 0;
             if (!obj.Forces.Any(x => x.SIState != SIState.Known))
             {
-                totalX = CalculateTensionForce(obj.Forces);
+                resultTensionForce = CalculateTensionForce(obj.Forces, tensionSetting.TargetObjAngle);
             }
             else if (!secondObj.Forces.Any(x => x.SIState != SIState.Known))
             {
-                totalX = CalculateTensionForce(secondObj.Forces);
+                resultTensionForce = CalculateTensionForce(secondObj.Forces, tensionSetting.SecondObjAngle);
             }
             else
             {
                 throw new NotImplementedException();
             }
 
-            obj.Forces.Add(new TensionForce(totalX, tensionSetting.TargetObjAngle));
-            secondObj.Forces.Add(new TensionForce(totalX, tensionSetting.SecondObjAngle));
+            obj.Forces.Add(new TensionForce(resultTensionForce, tensionSetting.TargetObjAngle));
+            secondObj.Forces.Add(new TensionForce(resultTensionForce, tensionSetting.SecondObjAngle));
         }
     }
 
-    private static double CalculateTensionForce(List<Force> forces)
+    private static double CalculateTensionForce(List<Force> forces, double angle)
+    {
+        var total = SumAllForces(forces);
+        var cos = Math.Round(Math.Cos(HelperClass.GetAngleInRadians(angle)), 8);
+        if (cos != 0)
+        {
+            return Math.Abs(Math.Round(total.Item1 / cos, 5));
+        }
+        else
+        {
+            var sin = Math.Round(Math.Sin(HelperClass.GetAngleInRadians(angle)), 8);
+            return Math.Abs(Math.Round(total.Item2 / sin, 5));
+        }
+    }
+
+    private static (double, double) SumAllForces(List<Force> forces)
     {
         double totalX = 0;
+        double totalY = 0;
         foreach (var force in forces)
         {
-            totalX += force.Direction.X;
+            var multiplier = force.ForceType != ForceType.Net ? -1 : 1;
+            totalX += force.Direction.X * multiplier;
+            totalY += force.Direction.Y;
         }
 
-        return totalX;
+        return (totalX, totalY);
     }
 }
