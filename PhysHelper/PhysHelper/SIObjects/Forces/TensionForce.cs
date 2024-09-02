@@ -7,4 +7,7 @@ public class TensionForce : Force
     public TensionForce(double quantity, double angle) : base(quantity, angle, ForceType.Tension)
     {
     }
+
+    // TODO
+    // Add Breaking Force quantity
 }

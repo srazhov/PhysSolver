@@ -35,6 +35,8 @@ public class TensionForceParser : BaseParserHandler<List<IPhysObject>, SceneSett
             }
             else
             {
+                // TODO
+                // If both objects' forces are not fully known
                 throw new NotImplementedException();
             }
 
