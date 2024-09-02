@@ -20,27 +20,28 @@ public class AdditionalForceParser : BaseParserHandler<List<IPhysObject>, SceneS
             var thisObjSetting = query.Objects.Single(x => x.Name == obj.GetId());
             for (int i = 0; i < thisObjSetting.Forces?.Count; i++)
             {
-                var forceType = thisObjSetting.Forces[i].IsNetForce ? ForceType.Net : ForceType.Additional;
                 var angle = thisObjSetting.Forces[i].Angle;
-                var siState = thisObjSetting.Forces[i].SiState;
+                var accSetting = thisObjSetting.Forces[i].Acceleration;
 
-                if (thisObjSetting.Forces[i].Acceleration != null)
+                Acceleration acc;
+                if (accSetting != null)
                 {
-                    var acc = new Acceleration(thisObjSetting.Forces[i].Acceleration.Quantity, angle)
+                    acc = new Acceleration(accSetting.Quantity, angle)
                     {
-                        SIState = thisObjSetting.Forces[i].Acceleration.SiState
+                        SIState = accSetting.SiState
                     };
-
-                    obj.Forces.Add(new Force(obj.Mass, acc, angle, forceType) { SIState = siState });
                 }
                 else
                 {
-                    obj.Forces.Add(new Force(thisObjSetting.Forces[i].Quantity, angle, forceType)
-                    {
-                        Mass = obj.Mass,
-                        SIState = siState
-                    });
+                    var accQuantity = thisObjSetting.Forces[i].Quantity / obj.Mass.Quantity;
+                    acc = new Acceleration(accQuantity, angle);
                 }
+
+                var forceType = thisObjSetting.Forces[i].IsNetForce ? ForceType.Net : ForceType.Additional;
+                obj.Forces.Add(new Force(obj.Mass, acc, angle, forceType)
+                {
+                    SIState = thisObjSetting.Forces[i].SiState
+                });
             }
         }
     }

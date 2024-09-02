@@ -121,13 +121,13 @@ public static class PhysObjectHelpers
         return query;
     }
 
-    public static void AssertOneForce(IEnumerable<Force>? forces, ForceType reqForceType, double reqQuantity, double reqAngle)
+    public static Force? AssertOneForce(IEnumerable<Force>? forces, ForceType reqForceType, double reqQuantity, double reqAngle)
     {
         var force = forces?.SingleOrDefault(x => x.ForceType == reqForceType);
         if (force == null)
         {
             Assert.Fail($"Could not find any force of type {reqForceType}");
-            return;
+            return null;
         }
 
         Assert.Multiple(() =>
@@ -142,5 +142,7 @@ public static class PhysObjectHelpers
             }
             Assert.That(force.Angle, Is.EqualTo(reqAngle).Within(0.00001), $"{reqForceType} force doesn't have correct angle");
         });
+
+        return force;
     }
 }
