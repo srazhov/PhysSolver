@@ -33,20 +33,16 @@ public class PhysObjectsParserTests
             Assert.That(m1?.Forces.Where(x => x.ForceType == ForceType.Weight), Has.Exactly(2).Items);
             Assert.That(m1?.Forces.Where(x => x.ForceType == ForceType.Normal), Has.Exactly(2).Items);
 
-            var m1NetForce = m1?.Forces.SingleOrDefault(x => x.ForceType == ForceType.Net);
-            Assert.That(m1NetForce, Is.Not.Null);
-            Assert.That(m1NetForce?.Quantity, Is.EqualTo(0));
+            PhysObjectHelpers.AssertOneForce(m1?.Forces, ForceType.Net, 0, 0);
 
             // Assert m2 Forces
             var m2 = results.SingleOrDefault(x => x.GetId() == "m2");
             Assert.That(m2, Is.Not.Null);
             Assert.That(m2?.Forces, Has.Exactly(3).Items);
-            Assert.That(m2?.Forces.Where(x => x.ForceType == ForceType.Weight), Has.Exactly(1).Items);
-            Assert.That(m2?.Forces.Where(x => x.ForceType == ForceType.Normal), Has.Exactly(1).Items);
 
-            var m2NetForce = m2?.Forces.SingleOrDefault(x => x.ForceType == ForceType.Net);
-            Assert.That(m2NetForce, Is.Not.Null);
-            Assert.That(m2NetForce?.Quantity, Is.EqualTo(0));
+            PhysObjectHelpers.AssertOneForce(m2?.Forces, ForceType.Weight, 49, 270);
+            PhysObjectHelpers.AssertOneForce(m2?.Forces, ForceType.Normal, 49, 90);
+            PhysObjectHelpers.AssertOneForce(m2?.Forces, ForceType.Net, 0, 0);
         });
     }
 
@@ -108,7 +104,7 @@ public class PhysObjectsParserTests
             PhysObjectHelpers.AssertOneForce(m1?.Forces, ForceType.Normal, 7.09955, 105);
             PhysObjectHelpers.AssertOneForce(m1?.Forces, ForceType.KineticFriction, 1.277919, 195);
             PhysObjectHelpers.AssertOneForce(m1?.Forces, ForceType.Tension, 4.03524, 15);
-            PhysObjectHelpers.AssertOneForce(m1?.Forces, ForceType.Net, -0.855, 15);
+            PhysObjectHelpers.AssertOneForce(m1?.Forces, ForceType.Net, 0.855, 15);
 
             // Assert m2 Forces
             var m2 = results.SingleOrDefault(x => x.GetId() == "m2");
@@ -117,9 +113,9 @@ public class PhysObjectsParserTests
 
             PhysObjectHelpers.AssertOneForce(m2?.Forces, ForceType.Weight, 4.9, 270);
             PhysObjectHelpers.AssertOneForce(m2?.Forces, ForceType.Normal, 4.73303, 105);
-            PhysObjectHelpers.AssertOneForce(m2?.Forces, ForceType.Tension, -4.03524, 195);
-            PhysObjectHelpers.AssertOneForce(m2?.Forces, ForceType.Net, -0.57, 15);
             PhysObjectHelpers.AssertOneForce(m2?.Forces, ForceType.Additional, double.NaN, 15);
+            PhysObjectHelpers.AssertOneForce(m2?.Forces, ForceType.Tension, 4.03524, 195);
+            PhysObjectHelpers.AssertOneForce(m2?.Forces, ForceType.Net, 0.57, 15);
         });
     }
 }

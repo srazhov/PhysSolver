@@ -99,6 +99,8 @@ public class StaticForceParserTests
         // Act
         parser.Parse(results, query);
 
+        Assert.Fail();
+
         // Assert
         Assert.Multiple(() =>
         {

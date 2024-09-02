@@ -17,13 +17,6 @@ namespace PhysHelper.SIObjects.Forces
                 SIState = SIState.Unimportant;
                 Quantity = 0;
             }
-
-            if (forceType == ForceType.Net)
-            {
-                // mg + N + Fk = ma
-                // Net Force must have opposite sign
-                Quantity *= -1;
-            }
         }
 
         public Force(double quantity, double angle, ForceType forceType) : base(quantity, angle)
