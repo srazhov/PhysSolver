@@ -2,8 +2,8 @@ using System.Numerics;
 using PhysHelper.Enums;
 using PhysHelper.Scenes.Objects;
 using PhysHelper.Scenes.SceneSettings;
+using PhysHelper.SIObjects;
 using PhysHelper.SIObjects.Forces;
-using static PhysHelper.SIObjects.Vector;
 
 namespace PhysHelper.Parsers.PhysObjectParsers;
 
@@ -31,10 +31,8 @@ public class NetForceParser : BaseParserHandler<List<IPhysObject>, SceneSettings
             netForceY += forces[i].Direction.Y;
         }
 
-        var magnitude = new VectorQuantity(netForceX, netForceY).Magnitude;
-        var dotProduct = Vector2.Dot(new Vector2((float)netForceX, (float)netForceY), new Vector2(1, 0));
-        var angle = magnitude == 0 ? 0 : Math.Round(Math.Acos(dotProduct / magnitude) * (180 / Math.PI), 2);
+        var vector = new VectorQuantity(netForceX, netForceY, true);
 
-        return new Force(magnitude, angle, ForceType.Net);
+        return new Force(vector.Quantity, vector.Angle, ForceType.Net);
     }
 }

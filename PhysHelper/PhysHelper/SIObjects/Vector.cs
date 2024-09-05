@@ -1,5 +1,4 @@
 ﻿using PhysHelper.Enums;
-using PhysHelper.Helpers;
 
 namespace PhysHelper.SIObjects
 {
@@ -7,64 +6,35 @@ namespace PhysHelper.SIObjects
     {
         public Vector(double quantity, double angle)
         {
-            Quantity = quantity;
-            Angle = angle;
             SIState = SIState.Known;
+            Direction = new VectorQuantity(quantity, angle);
         }
 
         public Vector()
         {
             SIState = SIState.Unimportant;
+            Direction = new VectorQuantity(double.NaN, 0);
         }
-
-        private VectorQuantity? direction;
-
-        private double angle;
-
-        private double quantity;
 
         public double Quantity
         {
-            get => SIState == SIState.Known ? quantity : double.NaN;
-            set => quantity = value;
+            get => SIState == SIState.Known ? Direction.Quantity : double.NaN;
+            protected set => Direction.Quantity = value;
         }
 
         public double Angle
         {
-            get => angle;
-            set => angle = Math.Abs(value % 360);
+            get => Direction.Angle;
+            private set => Direction.Angle = value;
         }
 
-        public virtual VectorQuantity Direction
-        {
-            get
-            {
-                if (direction == null)
-                {
-                    var xComp = Math.Round(Quantity * Math.Cos(HelperClass.GetAngleInRadians(Angle)), 5);
-                    var yComp = Math.Round(Quantity * Math.Sin(HelperClass.GetAngleInRadians(Angle)), 5);
-
-                    direction = new VectorQuantity(xComp, yComp);
-                }
-
-                return direction;
-            }
-        }
+        public VectorQuantity Direction { get; private set; }
 
         public double Magnitude => Direction.Magnitude;
 
         public abstract string UnitOfMeasure { get; }
 
         public SIState SIState { get; set; }
-
-        public class VectorQuantity(double x, double y)
-        {
-            public double X { get; set; } = x;
-
-            public double Y { get; set; } = y;
-
-            public double Magnitude => Math.Round(Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2)), 5);
-        }
     }
 }
 
