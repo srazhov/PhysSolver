@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhysHelper", "PhysHelper.cs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhysHelper.Tests", "..\PhysHelper.Tests\PhysHelper.Tests.csproj", "{495F4D8F-AA18-461A-9C9E-40CD50ADB726}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhysHelper.MAUI", "..\..\PhysHelper.MAUI\PhysHelper.MAUI.csproj", "{C36E0622-47A0-4358-881D-C028AA0F97FF}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
